@@ -7,7 +7,7 @@ for YY in range(8):
         addr_base = BITMAP_ADDR + (39 - SS) * 8
         addr_rel = (40*8) * ((SS+YY) / 8) + (SS+YY) % 8
         addr_total = addr_base + addr_rel
-        print "addr base: $%04x - addr rel: $%04x = $%04x" % (addr_base, addr_rel, addr_total)
+        print "addr base: $%04x + addr rel: $%04x = $%04x" % (addr_base, addr_rel, addr_total)
 
 #print "Normal *********"
 #BITMAP_ADDR = 0
