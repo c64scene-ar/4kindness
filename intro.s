@@ -63,19 +63,18 @@ ZP_SYNC_RASTER = $fe                    ; used to sync raster
 
         lda #01                         ; enable raster irq
         sta $d01a
+      
+        lda #$50
+        sta $d012
 
         ldx #<irq                       ; setup IRQ vector
         ldy #>irq
         stx $fffe
         sty $ffff
-
-        
-        lda #$50
-        sta $d012
-
-        lda $dc0d                       ; ack possible interrupts
-        lda $dd0d
-        asl $d019
+  
+        ;lda $dc0d                       ; ack possible interrupts
+        ;lda $dd0d
+        ;asl $d019
 
         cli
 
