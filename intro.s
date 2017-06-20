@@ -15,11 +15,11 @@
 ;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-;
 ; Constants
 ;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-;
-.include "c64.inc"                      ; c64 constants
+;.include "c64.inc"                      ; c64 constants
 
-DEBUG = 1                               ; rasterlines:1, music:2, all:3
+DEBUG = 0                               ; rasterlines:1, music:2, all:3
 
-BITMAP_ADDR = $2000 + 8 * 40 * 12
+BITMAP_ADDR = $6000 + 8 * 40 * 12
 
 
 .segment "CODE"
@@ -30,8 +30,15 @@ BITMAP_ADDR = $2000 + 8 * 40 * 12
 
         jsr clear_screen                ; clear screen
         jsr init_bitmap
+        jsr $8000 ; init music
 
-        lda #0
+        ; select bank 1 ($4000-$7fff)
+        lda $dd00
+        and #%11111100
+        ora #%00000010
+        sta $dd00
+
+        lda #2
         sta $d020                       ; border color
         lda #0
         sta $d021                       ; background color
@@ -42,7 +49,7 @@ BITMAP_ADDR = $2000 + 8 * 40 * 12
         lda #%00111011                  ; bitmap mode, default scroll-Y position, 25-rows
         sta $d011
 
-        lda #%00011100                  ; bitmap addr: $2000, charset $1800 (not-used), video RAM: $0400
+        lda #%00001100                  ; bitmap addr: $2000 (6000), charset $1800 (not-used), video RAM: $0000 ($4000)
         sta $d018
 
         lda #$7f                        ; turn off cia interrups
@@ -81,6 +88,7 @@ main_loop:
 .if (::DEBUG & 1)
         inc $d020
 .endif
+        jsr $8003 ; play music
         lda #0
         sta sync_raster
         jsr animate_scroll
@@ -235,9 +243,9 @@ bit_idx_bottom:
         ldx #$00
 
 l0:
-        .repeat 32,II                   ; clear bitmap memory
-        sta $2000 + 256 * II,x
-        .endrepeat
+        ;.repeat 32,II                   ; clear bitmap memory
+        ;sta $2000 + 256 * II,x
+        ;.endrepeat
         dex
         bne l0
 
@@ -315,5 +323,16 @@ scroll_text:
 
 ; charset to be used for sprites here
 charset:
-        .incbin "font_caren_1x2-charset.bin"
+        .incbin "res/arleka_font_caren_remix0A-charset.bin" ; arleka_font_caren_remix0A_invert-charset.bin"
 
+.org $4000
+.segment "BMP_VS"
+        .incbin "res/logo-v.c64",2
+
+.org $6000
+.segment "BMP_BS"
+        .incbin "res/logo-b.c64",2
+
+.org $8000
+.segment "MUSIC_S"
+        .incbin "res/music.c64",2
