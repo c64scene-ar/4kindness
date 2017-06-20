@@ -21,6 +21,11 @@ DEBUG = 0                               ; rasterlines:1, music:2, all:3
 
 BITMAP_ADDR = $6000 + 8 * 40 * 12
 
+;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-;
+; ZP variables
+;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-;
+ZP_SYNC_RASTER = $fe                    ; used to sync raster
+
 
 .segment "CODE"
         sei
@@ -40,8 +45,10 @@ BITMAP_ADDR = $6000 + 8 * 40 * 12
 
         lda #2
         sta $d020                       ; border color
+
         lda #0
         sta $d021                       ; background color
+        sta ZP_SYNC_RASTER
 
         lda #%00001000                  ; no scroll, hires (mono color), 40-cols
         sta $d016
@@ -75,7 +82,7 @@ BITMAP_ADDR = $6000 + 8 * 40 * 12
         cli
 
 main_loop:
-        lda sync_raster
+        lda ZP_SYNC_RASTER
         beq :+
         jsr do_raster_anims
 :
@@ -89,8 +96,7 @@ main_loop:
         inc $d020
 .endif
         jsr $8003 ; play music
-        lda #0
-        sta sync_raster
+        dec ZP_SYNC_RASTER
         jsr animate_scroll
 .if (::DEBUG & 1)
         dec $d020
@@ -281,32 +287,17 @@ loop2:  sta $d800,x                    ; clears the color RAM
 ; irq vector
 ;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-;
 .proc irq
-        pha                             ; saves A, X, Y
-        txa
-        pha
-        tya
-        pha
+        pha                             ; saves A
 
         asl $d019                       ; clears raster interrupt
+        inc ZP_SYNC_RASTER
 
-        lda #1
-        sta sync_raster
-
-        pla                             ; restores A, X, Y
-        tay
-        pla
-        tax
-        pla
+        pla                             ; restores A
         rti                             ; restores previous PC, status
 .endproc
 
 
 
-
-;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-;
-; global variables
-;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-;
-sync_raster:            .byte 0         ; used to sync raster
 
 
 ; starts with an empty (white) palette
