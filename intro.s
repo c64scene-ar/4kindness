@@ -327,9 +327,11 @@ charset:
 
 .segment "BMP_VS"
         .incbin "res/logo-v.c64",2
+;.incbin "res/puas3-v.c64",2
 
 .segment "BMP_BS"
         .incbin "res/logo-b.c64",2
+;        .incbin "res/puas3-b.c64",2
 
 .segment "MUSIC_S"
         .incbin "res/music.c64",2
