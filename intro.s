@@ -80,15 +80,8 @@ ZP_SYNC_RASTER = $fe                    ; used to sync raster
 
 main_loop:
         lda ZP_SYNC_RASTER
-        beq :+
-        jsr do_raster_anims
-:
-        jmp main_loop
+        beq main_loop
 
-;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-;
-; do_raster_anims
-;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-;
-.proc do_raster_anims
 .if (::DEBUG & 1)
         inc $d020
 .endif
@@ -98,8 +91,7 @@ main_loop:
 .if (::DEBUG & 1)
         dec $d020
 .endif
-        rts
-.endproc
+        jmp main_loop
 
 ;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-;
 ; animate_scroll
