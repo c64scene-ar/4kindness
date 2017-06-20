@@ -72,9 +72,9 @@ ZP_SYNC_RASTER = $fe                    ; used to sync raster
         stx $fffe
         sty $ffff
   
-        ;lda $dc0d                       ; ack possible interrupts
-        ;lda $dd0d
-        ;asl $d019
+        lda $dc0d                       ; ack possible interrupts
+        lda $dd0d
+        asl $d019
 
         cli
 
