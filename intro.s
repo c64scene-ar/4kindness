@@ -325,14 +325,11 @@ scroll_text:
 charset:
         .incbin "res/arleka_font_caren_remix0A-charset.bin" ; arleka_font_caren_remix0A_invert-charset.bin"
 
-.org $4000
 .segment "BMP_VS"
         .incbin "res/logo-v.c64",2
 
-.org $6000
 .segment "BMP_BS"
         .incbin "res/logo-b.c64",2
 
-.org $8000
 .segment "MUSIC_S"
         .incbin "res/music.c64",2
