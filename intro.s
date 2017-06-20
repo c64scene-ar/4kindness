@@ -33,8 +33,6 @@ ZP_SYNC_RASTER = $fe                    ; used to sync raster
         lda #$35                        ; no basic, no kernal
         sta $01
 
-        jsr clear_screen                ; clear screen
-        jsr init_bitmap
         jsr $8000 ; init music
 
         ; select bank 1 ($4000-$7fff)
@@ -240,48 +238,6 @@ bit_idx_bottom:
         .byte 0                         ; points to the bit displayed
 .endproc
 
-;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-;
-; init_bitmap
-;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-;
-.proc init_bitmap
-
-        lda #%10101010
-        ldx #$00
-
-l0:
-        ;.repeat 32,II                   ; clear bitmap memory
-        ;sta $2000 + 256 * II,x
-        ;.endrepeat
-        dex
-        bne l0
-
-
-        lda #%00010000                  ; white foreground, black background
-l1:
-        sta $400,x
-        sta $500,x
-        sta $600,x
-        sta $6e8,x
-        dex
-        bne l1
-
-        rts
-.endproc
-
-;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-;
-; clear_screen
-;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-;
-.proc clear_screen
-        lda #01
-        ldx #$00
-loop2:  sta $d800,x                    ; clears the color RAM
-        sta $d900,x
-        sta $da00,x
-        sta $dae8,x
-        inx
-        bne loop2
-        rts
-.endproc
 
 ;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-;
 ; irq vector
@@ -295,9 +251,6 @@ loop2:  sta $d800,x                    ; clears the color RAM
         pla                             ; restores A
         rti                             ; restores previous PC, status
 .endproc
-
-
-
 
 
 ; starts with an empty (white) palette
