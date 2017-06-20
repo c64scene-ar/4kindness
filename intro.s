@@ -323,7 +323,8 @@ scroll_text:
 
 ; charset to be used for sprites here
 charset:
-        .incbin "res/arleka_font_caren_remix0A-charset.bin" ; arleka_font_caren_remix0A_invert-charset.bin"
+;        .incbin "res/arleka_font_caren_remix0A-charset.bin" 
+        .incbin "res/arleka_font_caren_remix0A_invert-charset.bin"
 
 .segment "BMP_VS"
         .incbin "res/logo-v.c64",2
