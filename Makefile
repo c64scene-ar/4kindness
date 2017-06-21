@@ -6,13 +6,13 @@ RES=res/music.c64 res/arleka_font_caren_remix0A_invert-charset.bin
 all: $(NAME).prg
 
 run: $(NAME).prg
-	x64sc $(NAME).prg
+	x64sc -verbose -moncommands intro.sym $(NAME).prg
 
 $(NAME).prg: $(NAME).s $(RES)
-	cl65 -o $(NAME).prg -u __EXEHDR__ -t c64 -C c64-asm.cfg $(NAME).s
+	cl65 -d -g -Ln intro.sym -o $(NAME).prg -u __EXEHDR__ -t c64 -C c64-asm.cfg $(NAME).s
 
 $(NAME)-alz.prg: $(NAME).prg
-	wine alz64.exe -s $(NAME).prg $(NAME)-alz.prg
+	alz64 -s $(NAME).prg $(NAME)-alz.prg
 
 # Processed resources
 res/arleka_font_caren_remix0A_invert-charset.bin: res/arleka_font_caren_remix0A-charset.bin
