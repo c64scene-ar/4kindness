@@ -219,9 +219,15 @@ l2:
 ; starts with an empty (white) palette
 
 scroll_text:
-        scrcode "hi everyone at silesia 8 from pvm argentina this world is held together by the few acts of kindness that random ppl do so be kind"
-        scrcode "code  acidbrain munshkr riq woz  gfx alakran  font arlequin  music uctumi"
-        scrcode "    "
+        scrcode "       "
+        scrcode "hi everyone at silesia from pvm argentina. this world is held together "
+        scrcode "by the few acts of kindness that random ppl do so this little. intro is "
+        scrcode "our way to leave something other than unpaid debts after we die. 4k is a "
+        scrcode "bitch but our team of coders: acidbrain, munshkr, riq & woz made it work in a "
+        scrcode "joint effort. the logo was done by sc0ring and alakran adapted it to c64. "
+        scrcode "arlequin made the font and uctumi created this eardrum-piercing sid that "
+        scrcode "will loop inside your brain probably forever. have a great party!"
+        scrcode "       "
         .byte $ff
 
 .proc generator
