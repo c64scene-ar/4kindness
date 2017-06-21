@@ -219,12 +219,9 @@ l2:
 ; starts with an empty (white) palette
 
 scroll_text:
-        scrcode " Probando scroll en diagonal en bitmap... la pendiente de la diagonal es 8x1."
-        scrcode " Otro tipo de pendiente puede llevar mucho mas poder de computo ya que no podria usar 'rol' y tendria que usar algo mas especifico...    "
-        .byte 96,97
-        .byte 96,97
-        .byte 96,97
-        scrcode "  "
+        scrcode "hi everyone at silesia 8 from pvm argentina this world is held together by the few acts of kindness that random ppl do so be kind"
+        scrcode "code  acidbrain munshkr riq woz  gfx alakran  font arlequin  music uctumi"
+        scrcode "    "
         .byte $ff
 
 .proc generator
