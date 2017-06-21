@@ -221,7 +221,7 @@ l2:
 scroll_text:
         scrcode "       "
         scrcode "hi everyone at silesia from pvm argentina. this world is held together "
-        scrcode "by the few acts of kindness that random ppl do so this little. intro is "
+        scrcode "by the few acts of kindness that random ppl do so this little intro is "
         scrcode "our way to leave something other than unpaid debts after we die. 4k is a "
         scrcode "bitch but our team of coders: acidbrain, munshkr, riq & woz made it work in a "
         scrcode "joint effort. the logo was done by sc0ring and alakran adapted it to c64. "
