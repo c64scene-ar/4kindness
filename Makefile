@@ -1,7 +1,7 @@
 .PHONY: all clean
 
 NAME=intro
-RES=res/music.c64 res/arleka_font_caren_remix0A_invert-charset.bin
+RES=res/music.c64 res/arleka_font_caren_remix0C_invert-charset.bin
 
 all: $(NAME).prg
 
@@ -15,7 +15,7 @@ $(NAME)-alz.prg: $(NAME).prg
 	alz64 -s $(NAME).prg $(NAME)-alz.prg
 
 # Processed resources
-res/arleka_font_caren_remix0A_invert-charset.bin: res/arleka_font_caren_remix0A-charset.bin
+res/arleka_font_caren_remix0C_invert-charset.bin: res/arleka_font_caren_remix0C-charset.bin
 	python scripts/invert.py $< $@
 
 res/music.c64: res/mass_media.sid
