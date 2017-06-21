@@ -1,6 +1,6 @@
 
 print "Inclinado **********"
-BITMAP_ADDR = 0
+BITMAP_ADDR = 0x6000+ 8 * 40 * 12
 for YY in range(8):
     print "-"
     last_value = 0
