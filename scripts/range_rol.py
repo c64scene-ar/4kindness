@@ -1,4 +1,3 @@
-
 BITMAP_ADDR = 0x6000 + 8 * 40 * 12
 
 print "Inclinado Top **********"
