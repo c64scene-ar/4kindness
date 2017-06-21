@@ -3,7 +3,7 @@
 NAME=intro
 RES=res/music.c64 res/arleka_font_caren_remix0A_invert-charset.bin
 
-all: $(NAME).prg $(NAME)-alz.prg
+all: $(NAME).prg
 
 run: $(NAME).prg
 	x64sc $(NAME).prg
