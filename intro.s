@@ -148,23 +148,8 @@ next:
         sta $fd
 
 
-        ; scroll top 8 bytes
-        ; YY = char rows
-        ; SS = bitmap cols
-;        .repeat 8, YY
-;                lda ($fc),y
-;                ldx ZP_BIT_IDX_TOP         ; set C according to the current bit index
-;:               asl
-;                dex
-;                bpl :-
-;
-;                .repeat 40, SS
-;                        rol BITMAP_ADDR + (39 - SS) * 8 + (40*8) * ((SS+YY) / 8) + (SS+YY) .MOD 8
-;                .endrepeat
-;                iny                     ; byte of the char
-;        .endrepeat
-
-        jsr $c000
+        jsr $c000                       ; do the rolling (upper part)
+                                        ; code is autogenrated in runtime
 
 
         ; fetch bottom part of the char
@@ -176,49 +161,29 @@ next:
         adc #04                         ; the same thing as adding 1024
         sta $fd
 
-        lda ZP_BIT_IDX_BOTTOM              ; if bit_idx_bottom == 0, then char + 1
+        lda ZP_BIT_IDX_BOTTOM           ; if bit_idx_bottom == 0, then char + 1
         cmp #$07
-        bne :+
-        clc
-        lda $fc
-        adc #$01
-        sta $fc
-        lda $fd
-        adc #$00
-        sta $fd
+        bne l0
+        inc $fc
+        bne l0
+        inc $fd
 
-:
+l0:
         ldy $fb                         ; restore Y from tmp variable
 
-        ; scroll middle 8 bytes
-        ; YY = char rows
-        ; SS = bitmap cols
-;        .repeat 8, YY
-;                lda ($fc),y
-;                ldx ZP_BIT_IDX_BOTTOM      ; set C according to the current bit index
-;:               asl
-;                dex
-;                bpl :-
-;
-;                .repeat 40, SS
-;                        rol BITMAP_ADDR + 40 * 8 + (39 - SS) * 8 + (40*8) * ((SS+YY) / 8) + (SS+YY) .MOD 8
-;                .endrepeat
-;                iny                     ; byte of the char
-;        .endrepeat
 
-        jsr $c400
+        jsr $c400                       ; do the rolling (bottom part)
+                                        ; code is autogenrated in runtime
 
-        ldx ZP_BIT_IDX_TOP                 ; bit idx top
+        ldx ZP_BIT_IDX_TOP              ; bit idx top
         inx
         cpx #8
         bne l1
 
         ldx #0
         clc
-        lda load_scroll_addr
-        adc #1
-        sta load_scroll_addr
-        bcc l1
+        inc load_scroll_addr
+        bne l1
         inc load_scroll_addr+1
 l1:
         stx ZP_BIT_IDX_TOP
