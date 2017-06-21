@@ -24,4 +24,4 @@ res/music.c64: res/mass_media.sid
 	rm -f tmp.sid
 
 clean:
-	rm -f $(NAME)*.prg *.o $(RES)
+	rm -f $(NAME)*.prg *.o $(RES) *.sym
