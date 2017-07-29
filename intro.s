@@ -1,8 +1,6 @@
 ;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-;
-; Scroller using bitmap
-;
-; Original code by Riq
-; https://github.com/ricardoquesada/c64-misc
+; PVM 4Kindness
+; Code: Acidbrain, munshkr, riq, The_Woz
 ;
 ;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-;
 
@@ -45,7 +43,7 @@ ZP_BIT_IDX_BOTTOM = $b2
         ora #%00000010
         sta $dd00
 
-        lda #2
+        lda #0
         sta $d020                       ; border color
 
         lda #0
@@ -230,6 +228,48 @@ scroll_text:
         scrcode "       "
         .byte $ff
 
+;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-;
+; generator
+; routine that generates code for the scroller.
+; needed in order to reduce the file size
+;
+; code that will be generated at $c000:
+;
+;        ; scroll top 8 bytes
+;        ; YY = char rows
+;        ; SS = bitmap cols
+;        .repeat 8, YY
+;                lda ($fc),y
+;                ldx bit_idx_top         ; set C according to the current bit index
+;:               asl
+;                dex
+;                bpl :-
+;
+;                .repeat 40, SS
+;                        rol BITMAP_ADDR + (39 - SS) * 8 + (40*8) * ((SS+YY) / 8) + (SS+YY) .MOD 8
+;                .endrepeat
+;                iny                     ; byte of the char
+;        .endrepeat
+;
+; code that will be generated at $c400:
+;
+;        ; scroll middle 8 bytes
+;        ; YY = char rows
+;        ; SS = bitmap cols
+;        .repeat 8, YY
+;                lda ($fc),y
+;                ldx bit_idx_bottom      ; set C according to the current bit index
+;:               asl
+;                dex
+;                bpl :-
+;
+;                .repeat 40, SS
+;                        rol BITMAP_ADDR + 40 * 8 + (39 - SS) * 8 + (40*8) * ((SS+YY) / 8) + (SS+YY) .MOD 8
+;                .endrepeat
+;                iny                     ; byte of the char
+;        .endrepeat
+;
+;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-;
 .proc generator
         ldx #0
         lda #$2e                        ; set everything with 'rol'
