@@ -1,5 +1,7 @@
 ;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-;
-; PVM 4Kindness
+; 4Kindness
+; http://pungas.space
+;
 ; Code: Acidbrain, munshkr, riq, The_Woz
 ;
 ;=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-;
@@ -253,7 +255,7 @@ scroll_text:
 ;
 ; code that will be generated at $c400:
 ;
-;        ; scroll middle 8 bytes
+;        ; scroll bottom 8 bytes
 ;        ; YY = char rows
 ;        ; SS = bitmap cols
 ;        .repeat 8, YY
