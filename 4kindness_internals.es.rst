@@ -10,10 +10,12 @@ Cursito intermedio de asm para la c64 - Parte II: Haciendo una intro 4k
 Introducción
 ============
 
-Hola. Primero bajarse el 4Kindness para darse una idea de lo que abarca esta
-parte del cursito:
+Hola. Esto es lo que hace la intro 4Kindness:
 
--  `4kindness.d64 <https://github.com/c64scene-ar/4kindness/raw/master/bin/4kindness.d64>`__
+.. Figure:: https://lh3.googleusercontent.com/y3C0o2PzEErAfDILRZSLyG9wV9HNSk58Udk-k--r6T80yqFkpny995jARy_4mFHKoiXjs8I2nfJhXbv3XNvRxjzWt-IYfZjQBVIn_t8KCNuHT4oVMQLnn-OJtLQSDiDk-jrs2OADaMs
+   :alt: Intro 4Kindness
+
+O pueden bajar el binario de aca: `4kindness.d64 <https://github.com/c64scene-ar/4kindness/raw/master/bin/4kindness.d64>`__
 
 Listo, empecemos. Solo dos cosas que vamos a estudiar:
 
@@ -32,16 +34,20 @@ releerlo en caso que no lo tengan fresco:
 Hacer un scroll con sprites hi-res, ó en modo gráfico hi-res es básimante
 similar. Repasemos el modo gráfico hi-res.
 
-- Esta compuesto por 40 x 25 celdas.
+- Esta compuesto por 40 x 25 celdas:
 
 
 .. Figure:: https://lh3.googleusercontent.com/K_YyuNocoS4yaVxr2uuJgraYpI5An3BwgxahScn3bDjdFBsLj4b6h-g4ngUxkbOfXqlkpSQuQIKeGGEgVgrsShnI5FnIl8GSKw8msFEYmGatIrfTKp_5RpFPTsmgZYZ1N-2fH3T1QMc
    :alt: bitmap cells
 
-- Cada celda ocupa 8 bytes
+- Cada celda ocupa 8 bytes:
 
 .. Figure:: https://lh3.googleusercontent.com/lqU7dLG2RpCfhoZ-pw2L3zNjkLVOgsjAdHxM5JtYnLy7gwO7K7i-lxRawKgyKhloBcvO3IzZ1vl36sthotpo7DSFIhdj7X9-qbnbh5Bp8OjjwajeKwcwOouhZgqqDKL4amN1TwRczac
    :alt: cell detail
+
+En total ocupa 40 celdas * 8 bytes c/u * 25 celdas = 8000 bytes. Más la memoria
+para el color que son otros 1000 bytes (pero que no nos interesa para hacer el
+scroll).
 
 Si queremos hacer un scroll horizontal en modo gráfico hi-res, solo tenemos que
 hacer ``rol`` (rotate left) de los bytes en un orden determinado, ya que el
