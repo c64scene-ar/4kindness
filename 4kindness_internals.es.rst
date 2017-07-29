@@ -30,11 +30,16 @@ releerlo en caso que no lo tengan fresco:
 - `Como hacer un scroll con sprites <https://github.com/c64scene-ar/chipdisk-nac-vol.1/blob/master/chipdisk_internals.es.rst#scroll-con-sprites>`__
 
 Hacer un scroll con sprites hi-res, ó en modo gráfico hi-res es básimante
-similar. Repasemos el modo gráfico hi-res:
+similar. Repasemos el modo gráfico hi-res.
+
+- Esta compuesto por 40 x 25 celdas.
 
 
 .. Figure:: https://lh3.googleusercontent.com/K_YyuNocoS4yaVxr2uuJgraYpI5An3BwgxahScn3bDjdFBsLj4b6h-g4ngUxkbOfXqlkpSQuQIKeGGEgVgrsShnI5FnIl8GSKw8msFEYmGatIrfTKp_5RpFPTsmgZYZ1N-2fH3T1QMc
    :alt: bitmap cells
+
+- Cada celda ocupa 8 bytes
+
 .. Figure:: https://lh3.googleusercontent.com/lqU7dLG2RpCfhoZ-pw2L3zNjkLVOgsjAdHxM5JtYnLy7gwO7K7i-lxRawKgyKhloBcvO3IzZ1vl36sthotpo7DSFIhdj7X9-qbnbh5Bp8OjjwajeKwcwOouhZgqqDKL4amN1TwRczac
    :alt: cell detail
 
