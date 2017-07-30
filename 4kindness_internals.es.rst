@@ -342,12 +342,12 @@ Y si analizamos los primeros 40 ``rols``:
 
 Acá se ve un patrón claro:
 
-- Los valores de los 8 primeros ``rol`` estan separados por ``-7``:
+- Los valores de los 8 primeros ``rol`` están separados por ``-7``:
   ``$7038``, ``$7031``, ...
 - Los siguientes 8 ``rol`` so iguales a los 8 anteriores, pero sus valores son
   ``$100`` mayores. ``$100`` es un número redondo ¡Nos gusta!
 
-Y si vemos nuavente nuestro algoritmo, vemos que tiene sentido los bytes que
+Y si miramos nuevamente nuestro algoritmo, vemos que tiene sentido los bytes que
 vemos.
 
 Veamos que pasa con los siguientes 40 ``rol``:
@@ -382,7 +382,7 @@ Veamos que pasa con los siguientes 40 ``rol``:
 
 Mmm... parecido al caso anterior, pero con una importante diferencia:
 
-- Los valores de los 7 primeros ``rol`` estan separadas por ``-7``: ``$7039``,
+- Los valores de los 7 primeros ``rol`` están separadas por ``-7``: ``$7039``,
   ``$7032``, ...
 - El valor del siguiente ``rol`` esta separado por ``305`` (305 = 320 - 7 - 8)
   del anterior
@@ -421,7 +421,7 @@ Y si vemos rápidamente los siguiente 40 ``rol`` vemos:
 
 Similar a los 40 ``rol`` anteriores.
 
-- Los valores de los 6 primeros ``rol`` estan separados por ``-7``: ``$703a``,
+- Los valores de los 6 primeros ``rol`` están separados por ``-7``: ``$703a``,
   ``$7033``, ...
 - El valor del siguiente ``rol`` esta separado por ``305`` (305 = 320 - 7 - 8)
   del anterior
@@ -457,7 +457,7 @@ así:
             for (x=0; x<40; x++) {
                 int rol_value = base_gfx;
                 rol_value += base[x];
-                rol_value += rel[y];
+                rol_value += offset[y];
                 y++;
                 generate_addr(rol_value);
             }
@@ -467,7 +467,8 @@ así:
 Veamos si funciona para los valores del primer bit:
 
 .. code::
-                  gfx   + base + rel  =
+
+        //        gfx   + base + offset =
         valor 0 = $6f00 + $138 +    0 = $7038 ✔
         valor 1 = $6f00 + $130 +    1 = $7031 ✔
         ...
@@ -476,10 +477,12 @@ Veamos si funciona para los valores del primer bit:
 
         valor 8 = $6f00 +  $f8 + $140 = $7138 ✔
 
+
 Parece funcionar... veamos para los del segundo bit:
 
 .. code::
-                   gfx   + base + rel  =
+
+        //         gfx   + base + offset =
         valor 40 = $6f00 + $138 +    1 = $7039 ✔
         valor 41 = $6f00 + $130 +    2 = $7032 ✔
         ...
@@ -488,15 +491,54 @@ Parece funcionar... veamos para los del segundo bit:
 
         valor 48 = $6f00 +  $f8 + $141 = $7139 ✔
 
+
 Sí, funciona. Y también funciona para el 2do bit, 3er bit, etc. Y de esta
 manera, tenemos un generador de valores para el ``rol`` que funciona como
 queremos.
 
 El código completo esta en `github <https://github.com/c64scene-ar/4kindness/blob/master/intro.s#L233>`__.
 No tiene nada de raro salvo esto de calcular los valores para los ``rol`` usando
-esta tablas.
+esta tablas. Algo así es:
 
-Pero, ¿y cuanto ocupa el código nuevo?
+.. code:: asm
+
+        .proc generate_loop
+
+                lda #8                          ; repeat 8 times
+                sta $80
+
+        l1_1:
+                jsr generate_jsr                ; jsr loop_jump
+
+                ldy $81
+                ldx #0
+        l1:
+
+                clc
+                lda table_base_lo,x             ; base always uses x
+                adc table_rel_lo,y              ; rel always uses y since y will vary in each iteration
+                sta $90
+                lda table_base_hi,x
+                adc table_rel_hi,y
+                sta $91
+
+                jsr generate_rol_addr
+
+                iny
+                inx
+                cpx #40
+                bne l1
+
+                jsr generate_iny
+
+                inc $81                         ; Y counter. gets incremented once per loop. offset to rel. addresses
+                dec $80                         ; repeat 8 times (once per bit)
+                bne l1_1
+
+                jmp generate_rts
+        .endproc
+
+¿Y cuanto ocupa el código que genera código?
 
 Sin comprimir:
 
