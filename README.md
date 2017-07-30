@@ -14,7 +14,7 @@
 
 ## Contact:
 
--  http://pungas.space
+-  Homepage: http://pungas.space
 -  Twitter: https://twitter.com/pungas64
 -  Facebook: https://www.facebook.com/PVM1996/
 -  IRC. EFnet: http://www.efnet.org/ . #pvm channel

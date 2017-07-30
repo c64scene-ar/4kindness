@@ -300,7 +300,8 @@ poder encontrar un patrón.
 
 Por ejemplo, esto es un dump de memoria de lo que queremos generar:
 
-.. Figure:: https://lh3.googleusercontent.com/_GlEZ1fNCw0On_PjZ2WXPJ6-Ju8bQIx_-ApR-s4W-pC-OgDL1Y2dW_zFtuKVFd23bzvUzJ1jO8HCGriIzWZaorzpAlVgiTXWBJ6Gely29o80qg5bQs3rNUINM7KSpd-6zCFByQzjEAo
+.. Figure:: https://lh3.googleusercontent.com/KdD6ER_utKc7LJ47dPdo0cAmdhY-aiT_bOp9eVrfrJzrTWxZcUGC1nnVDcfJWfzU9nxDOKBp3szGoKRG4BMfAfk9kc-ddxBMvfexDt9rg0AENCD99fR2jQdXKQBTYRd1Y_mO2jL-Fo8
+
 
 Analicemos los 3 primeros bytes: ``2E 38 70``
 
@@ -332,14 +333,23 @@ Y si seguimos analizando tenemos:
 
 ¿Se ve el patrón? ¡Claro que sí! Pero si nosotros diseñamos el algoritmo, ¡cómo
 no lo ibamos a saber que ese era el patrón!. Lo cierto es que ver los bytes
-ayuda. No hay que subestimar esta método. Sirve para:
+ayuda. No hay que subestimar este método. Sirve para:
 
 - Para saber los op-codes que hay que generar
 - Para encontrar algún patrón que no hayamos visto
 - Y luego para comparar que el código que estemos generando sea igual al
   original (también se puede usar un *binary compary*).
 
-Y eso es todo.
+
+Nosotros usamos tablas para sumar y calcular offsets, pero más allá de eso,
+el código que genera código es sencillo.
+
+Y eso es todo. No vale la pena poner el código que genera código aca. Lo
+interesante es saber que se puede hacer, y que el truco este en ver los
+patrones. Luego debería salir más o menos fácil.
+
+Se puede ver el código completo acá: https://github.com/c64scene-ar/4kindness/blob/master/intro.s#L233
+
 
 Preguntas y demás
 =================
