@@ -30,10 +30,9 @@ En la Parte_I_ vimos como hacer un scroll con sprites. Es un buen momento para
 releerlo en caso que no lo tengan fresco: `Como hacer un scroll con sprites <https://github.com/c64scene-ar/chipdisk-nac-vol.1/blob/master/chipdisk_internals.es.rst#scroll-con-sprites>`__
 
 Hacer un scroll con sprites hi-res, ó en modo gráfico hi-res es básimante
-similar. Repasemos el modo gráfico hi-res.
+lo mismo. Repasemos el modo gráfico hi-res.
 
 - Esta compuesto por 40 x 25 celdas:
-
 
 .. Figure:: https://lh3.googleusercontent.com/K_YyuNocoS4yaVxr2uuJgraYpI5An3BwgxahScn3bDjdFBsLj4b6h-g4ngUxkbOfXqlkpSQuQIKeGGEgVgrsShnI5FnIl8GSKw8msFEYmGatIrfTKp_5RpFPTsmgZYZ1N-2fH3T1QMc
    :alt: bitmap cells
@@ -43,25 +42,25 @@ similar. Repasemos el modo gráfico hi-res.
 .. Figure:: https://lh3.googleusercontent.com/lqU7dLG2RpCfhoZ-pw2L3zNjkLVOgsjAdHxM5JtYnLy7gwO7K7i-lxRawKgyKhloBcvO3IzZ1vl36sthotpo7DSFIhdj7X9-qbnbh5Bp8OjjwajeKwcwOouhZgqqDKL4amN1TwRczac
    :alt: cell detail
 
+
 En total ocupa 40 celdas * 8 bytes c/u * 25 celdas = 8000 bytes. Más la memoria
 para el color que son otros 1000 bytes (pero que no nos interesa para hacer el
 scroll).
 
 Si queremos hacer un scroll horizontal en modo gráfico hi-res, solo tenemos que
-hacer ``rol`` (rotate left) de los bytes en un orden determinado, ya que el
-``carry flag`` se tiene que propagar de un byte a otro.
+hacer ``rol`` (*rotate left*) de los bytes en un orden determinado, ya que el
+*carry flag* se tiene que propagar de un byte a otro.
 
 .. Figure:: https://lh3.googleusercontent.com/oEBuQcNd5kJmrhFS9MVPtRaaRMS6Mbe_TqzaAmzlz8q7fPY-_GsicScFhf5gtop6_3ifH0kG-4EIpJtUmvdIJnK0wlURmVk1wMCqhR_FPzY47z2BlOZZsBzPBK41c_CKzXPtRZywA9c
    :alt: horizontal scroll
 
-Supongamos que el bitmap esta la posición ``$6000`` y queremos scrollear la
-primer fila de celdas (las 8 primeras filas de bits de arriba), entonces un
-posible código sería:
+Supongamos que queremos scrollear la primer fila de celdas (las 8 primeras filas
+de bits de arriba), entonces un posible código sería:
 
 .. code:: asm
 
         ; variables
-        BITMAP_ADDR = $6000
+        BITMAP_ADDR = $6000     ; bitmap start address
         cell_x0_0  = BITMAP_ADDR +  0 * 8 + 0
         cell_x0_1  = BITMAP_ADDR +  0 * 8 + 1
         ...
@@ -69,7 +68,7 @@ posible código sería:
         cell_x39_7 = BITMAP_ADDR + 39 * 8 + 7
         ...
 
-        ; rotate left row 0
+        ; rotate-left row 0
         jsr get_carry_value
         rol cell_x39_0
         rol cell_x38_0
@@ -77,7 +76,7 @@ posible código sería:
         rol cell_x1_0
         rol cell_x0_0
 
-        ; rotate left row 1
+        ; rotate-left row 1
         jsr get_carry_value
         rol cell_x39_1
         rol cell_x38_1
@@ -85,7 +84,7 @@ posible código sería:
         rol cell_x1_1
         rol cell_x0_1
 
-        ; rotate left row 7
+        ; rotate-left row 7
         jsr get_carry_value
         rol cell_x39_7
         rol cell_x38_7
@@ -94,7 +93,7 @@ posible código sería:
         rol cell_x0_7
 
 
-El código se puede reducir mucho usando haciendo un *unrolled loop* con las
+El código se puede reducir mucho usando haciendo un *unrolled loop* [#]_ con las
 poderosas macros del ensamblador. (Ver
 `unrolled loops <https://github.com/c64scene-ar/chipdisk-nac-vol.1/blob/master/chipdisk_internals.es.rst#truquito-unrolled-loops>`__ 
 de la Parte I)
@@ -311,8 +310,9 @@ TODO: gráfico.
 Referencias
 ===========
 
+.. [#] El nombre en castellano es `bucle desenroscado <https://es.wikipedia.org/wiki/Desenroscado_de_bucles>`__ pero en este tutorial lo voy a seguir llamando *unrolled loop*
 .. [#] Usamos `alz64 <http://csdb.dk/release/?id=77754>`__ para comprimir, ya que comprime mejor que Exomizer, pero es mucho más lento
-.. [#] `Ritmo de la Noche - The Sacados <https://genius.com/The-sacados-ritmo-de-la-noche-lyrics>`__
+.. [#] Se repite y se repite, me tiene re-podrido: `Ritmo de la Noche - The Sacados <https://genius.com/The-sacados-ritmo-de-la-noche-lyrics>`__
 
 .. _Exomizer: https://bitbucket.org/magli143/exomizer/wiki/Home
 .. _Parte_I: https://bitbucket.org/magli143/exomizer/wiki/Home
