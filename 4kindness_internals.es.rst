@@ -287,8 +287,8 @@ código comprimido generado por *crunchers* como el alz64_ o el Exomizer_?
 Si se trata de *unrolled loops*, la respuesta es casi siempre sí. Por dos
 motivos:
 
-- Un *unrolled loop* no es más que un patrón que se repite y repite con algunos
-  bytes cambiados.
+- Un *unrolled loop* no es más que un patrón que se repite y se repite [#]_ con
+algunos bytes cambiados.
 - Si bien los *crunchers* de la c64 funcionan bien recordemos que el código del
   *de-cruncher* tiene que correr en la c64, ocupar muy poco y ser rápido. Y es
   por eso que no comprimem tan bien como compresor modernos como el bzip2 o xz.
@@ -312,6 +312,7 @@ Referencias
 ===========
 
 .. [#] Usamos `alz64 <http://csdb.dk/release/?id=77754>`__ para comprimir, ya que comprime mejor que Exomizer, pero es mucho más lento
+.. [#] `Ritmo de la Noche - The Sacados <https://genius.com/The-sacados-ritmo-de-la-noche-lyrics>`__
 
 .. _Exomizer: https://bitbucket.org/magli143/exomizer/wiki/Home
 .. _Parte_I: https://bitbucket.org/magli143/exomizer/wiki/Home
