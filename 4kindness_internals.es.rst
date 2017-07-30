@@ -16,7 +16,7 @@ Hola. Esto es lo que hace la intro 4Kindness:
    :alt: Intro 4Kindness
 
 Y el binario lo pueden bajar de acá: `4kindness.d64 <https://github.com/c64scene-ar/4kindness/raw/master/bin/4kindness.d64>`__.
-Y el código fuente esta aca: `4Kindness en github <https://github.com/c64scene-ar/4kindness>`__
+Y el código fuente esta acá: `4Kindness en github <https://github.com/c64scene-ar/4kindness>`__
 
 Listo, empecemos. Solo dos cosas que vamos a estudiar:
 
@@ -30,7 +30,7 @@ Scroll en diagonal
 En la Parte_I_ vimos como hacer un scroll con sprites. Es un buen momento para
 releerlo en caso que no lo tengan fresco: `Como hacer un scroll con sprites <https://github.com/c64scene-ar/chipdisk-nac-vol.1/blob/master/chipdisk_internals.es.rst#scroll-con-sprites>`__
 
-Hacer un scroll con sprites hi-res, ó en modo gráfico hi-res es básimante
+Hacer un scroll con sprites hi-res, ó en modo gráfico hi-res es básicamante
 lo mismo. Repasemos el modo gráfico hi-res.
 
 - Esta compuesto por 40 x 25 celdas:
@@ -238,7 +238,7 @@ mejorar la velocidad de ejecución).
 
 Es un compromiso: memoria RAM ó velocidad de ejecución & código más prolijo
 
-    .. note:: El algoritmo se puede escribir tranquilimante en C. De hecho
+    .. note:: El algoritmo se puede escribir tranquilamente en C. De hecho
       nosotros usamos cc65_ como ensamblador. Y mezclar C con ensamblador puede
       resultar muy útil. Pero esta fuera del alcance del "cursito de asm"
       el como usar C.
@@ -258,7 +258,7 @@ ocupa ~16K RAM:
 
 Cuando comprimimos todo [#]_, nos quedó un binario de ~5k.
 
-Pudimos reducir un poco la música, los fonts y usando la Zero Page estabamos en
+Pudimos reducir un poco la música, los fonts y usando la Zero Page estábamos en
 los ~4.5k. Mucho más no podíamos reducir el binario sin reducir esos 2k de
 código generados por el *unrolled loop*.
 
@@ -286,7 +286,7 @@ motivos:
   algunos bytes cambiados.
 - Si bien los crunchers_ de la c64 funcionan bien recordemos que el código del
   *de-cruncher* tiene que correr en la c64, ocupar muy poco y ser rápido. Y es
-  por eso que no comprimem tan bien como compresores modernos como el bzip2_ ó
+  por eso que no comprimen tan bien como compresores modernos como el bzip2_ ó
   el xz_.
 
 
@@ -332,7 +332,7 @@ Y si seguimos analizando tenemos:
 
 
 ¿Se ve el patrón? ¡Claro que sí! Pero si nosotros diseñamos el algoritmo, ¡cómo
-no ibamos a saber que ese era el patrón! Lo cierto es que ver los bytes ayuda.
+no íbamos a saber que ese era el patrón! Lo cierto es que ver los bytes ayuda.
 No hay que subestimar este método. Sirve para:
 
 - Para saber los op-codes que hay que generar
