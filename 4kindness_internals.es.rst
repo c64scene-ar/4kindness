@@ -15,7 +15,7 @@ Hola. Esto es lo que hace la intro 4Kindness:
 .. Figure:: https://lh3.googleusercontent.com/y3C0o2PzEErAfDILRZSLyG9wV9HNSk58Udk-k--r6T80yqFkpny995jARy_4mFHKoiXjs8I2nfJhXbv3XNvRxjzWt-IYfZjQBVIn_t8KCNuHT4oVMQLnn-OJtLQSDiDk-jrs2OADaMs
    :alt: Intro 4Kindness
 
-Y el binario lo pueden bajar de acá: `4kindness.d64 <https://github.com/c64scene-ar/4kindness/raw/master/bin/4kindness.d64>`__
+Y el binario lo pueden bajar de acá: `4kindness.d64 <https://github.com/c64scene-ar/4kindness/raw/master/bin/4kindness.d64>`__.
 Y el código fuente esta aca: `4Kindness en github <https://github.com/c64scene-ar/4kindness>`__
 
 Listo, empecemos. Solo dos cosas que vamos a estudiar:
@@ -95,10 +95,9 @@ de bits de arriba), entonces un posible código sería:
 
 
 El código se puede reducir mucho usando haciendo un *unrolled loop* [#]_ con las
-poderosas macros del ensamblador. (Ver
+poderosas macros del ensamblador (ver
 `unrolled loops <https://github.com/c64scene-ar/chipdisk-nac-vol.1/blob/master/chipdisk_internals.es.rst#truquito-unrolled-loops>`__
-de la Parte I)
-Algo así:
+de la Parte I). Sería algo así:
 
 
 .. code:: asm
@@ -168,7 +167,7 @@ Para scrollear solo la primer fila de bits, hay que hacer:
 Y ahora tenemos que convertir eso en un algoritmo. Tenemos 3 variables.
 Analicemos los patrones:
 
-- ``y``: por cada 8 ``rol``s, se incrementa en 1
+- ``y``: por cada 8 ``rol``, se incrementa en 1
 - ``x``: por cada ``rol``, se decrementa en 1
 - ``offset``: por cada ``rol``, se incrementa en 1. Con valores entre 0 y 7. O sea, módulo 8.
 
@@ -360,8 +359,8 @@ Referencias
 .. [#] Se repite y se repite, me tiene re-podrido: `Ritmo de la Noche - The Sacados <https://genius.com/The-sacados-ritmo-de-la-noche-lyrics>`__
 
 .. _Exomizer: https://bitbucket.org/magli143/exomizer/wiki/Home
-.. _Parte_I: https://bitbucket.org/magli143/exomizer/wiki/Home
+.. _Parte_I: https://github.com/c64scene-ar/chipdisk-nac-vol.1/blob/master/chipdisk_internals.es.rst
 .. _alz64: http://csdb.dk/release/?id=77754
-.. _cc65: https://github.com/cc65/cc65
 .. _bzip2: http://www.bzip.org/
+.. _cc65: https://github.com/cc65/cc65
 .. _xz: https://en.wikipedia.org/wiki/Xz
