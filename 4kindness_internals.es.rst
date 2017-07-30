@@ -277,14 +277,14 @@ Por qué un generador de código
 ------------------------------
 
 La pregunta es: ¿se puede hacer un generador de código que ocupe menos que el
-código comprimido generado por *crunchers_* como el alz64_ o el Exomizer_?
+código comprimido generado por crunchers_ como el alz64_ o el Exomizer_?
 
 Si se trata de *unrolled loops*, la respuesta es casi siempre sí. Por dos
 motivos:
 
 - Un *unrolled loop* no es más que un patrón que se repite y se repite [#]_ con
   algunos bytes cambiados.
-- Si bien los *crunchers_* de la c64 funcionan bien recordemos que el código del
+- Si bien los crunchers_ de la c64 funcionan bien recordemos que el código del
   *de-cruncher* tiene que correr en la c64, ocupar muy poco y ser rápido. Y es
   por eso que no comprimem tan bien como compresor modernos como el bzip2_ ó
   el xz_.
