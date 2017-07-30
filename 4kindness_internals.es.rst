@@ -262,7 +262,7 @@ Pudimos reducir un poco la música, los fonts y usando la Zero Page estábamos e
 los ~4.5k. Mucho más no podíamos reducir el binario sin reducir esos 2k de
 código generados por el *unrolled loop*.
 
-Había 4 posibles alternativas:
+Consideramos 4 posibles alternativas:
 
 - Hacer el loop en C
 - Hacer el loop en ensamblador
@@ -294,13 +294,13 @@ Cómo se hace un generador de código
 -----------------------------------
 
 No hay mágia negra ni nada raro. Lo que hay que hacer es analizar los bytes que
-uno quiere generar y buscar patrones y hacer un código que genere esos patrones.
+uno quiere generar, buscar patrones y hacer un código que genere esos patrones.
 Siempre que querramos generar código de un *unrolled loop*, entonces vamos a
 poder encontrar un patrón.
 
 Por ejemplo, esto es un dump de memoria de lo que queremos generar:
 
-.. Figure:: https://lh3.googleusercontent.com/KdD6ER_utKc7LJ47dPdo0cAmdhY-aiT_bOp9eVrfrJzrTWxZcUGC1nnVDcfJWfzU9nxDOKBp3szGoKRG4BMfAfk9kc-ddxBMvfexDt9rg0AENCD99fR2jQdXKQBTYRd1Y_mO2jL-Fo8
+.. Figure:: https://lh3.googleusercontent.com/nN58vzOSFLYm2fYr24Ys_89mX2NUjHTeRrFQvlU3_wJmXnoaDgGfRgq5yc11UFuA30b0_eAli5yMRK83CZTY0D9fz0tINAImgZ_4y66-qFanIJzrNvxlzGmIyNMG_joXqSOTgOlolTw
 
 
 Analicemos los 3 primeros bytes: ``2E 38 70``
@@ -308,46 +308,204 @@ Analicemos los 3 primeros bytes: ``2E 38 70``
 - ``2E`` es el opcode de ``rol``
 - ``38 70`` es la dirección de memoria en *little endian*: ``$7038``
 
-Y si seguimos analizando tenemos:
+Y si analizamos los primeros 40 ``rols``:
 
 .. code:: asm
 
-        rol $7038
-        rol $7031
-        rol $702a
-        rol $7023
-        rol $701c
-        rol $7015
-        rol $700e
-        rol $7007
-
-        rol $7138
-        rol $7131
-        rol $712a
-        rol $7123
-        rol $711c
-        rol $7115
-        rol $710e
-        rol $7107
+        ; scrolling bit 0
+        rol $7038       ; cell x=39  y=0
+        rol $7031       ; cell x=38  y=0
+        rol $702a       ; cell x=37  y=0
+        rol $7023       ; cell x=36  y=0
+        rol $701c       ; cell x=35  y=0
+        rol $7015       ; cell x=34  y=0
+        rol $700e       ; cell x=33  y=0
+        rol $7007       ; cell x=32  y=0
 
 
-¿Se ve el patrón? ¡Claro que sí! Pero si nosotros diseñamos el algoritmo, ¡cómo
-no íbamos a saber que ese era el patrón! Lo cierto es que ver los bytes ayuda.
-No hay que subestimar este método. Sirve para:
-
-- Para saber los op-codes que hay que generar
-- Para encontrar algún patrón que no hayamos visto
-- Y luego para comparar que el código que estemos generando sea igual al
-  original (también se puede usar un *binary compare*).
+        rol $7138       ; cell x=31  y=1
+        rol $7131       ; cell x=30  y=1
+        ...
+        rol $710e       ; cell x=25  y=1
+        rol $7107       ; cell x=24  y=1
 
 
-Nosotros usamos tablas para sumar y calcular offsets, pero más allá de eso,
-el código que genera código es sencillo.
+        rol $7238       ; cell x=23  y=2
+        rol $7231       ; cell x=22  y=2
+        ...
+        rol $720e       ; cell x=17  y=2
+        rol $7207       ; cell x=16  y=2
 
-Y eso es todo. No vale la pena poner el código que genera código acá, ya que
-esta en `github <https://github.com/c64scene-ar/4kindness/blob/master/intro.s#L233>`__.
-Lo interesante es saber que se puede hacer, y que el truco esta
-en ver los patrones. Luego debería salir más o menos fácil.
+        ...
+
+
+Acá se ve un patrón claro:
+
+- Los valores de los 8 primeros ``rol`` estan separados por ``-7``:
+  ``$7038``, ``$7031``, ...
+- Los siguientes 8 ``rol`` so iguales a los 8 anteriores, pero sus valores son
+  ``$100`` mayores. ``$100`` es un número redondo ¡Nos gusta!
+
+Y si vemos nuavente nuestro algoritmo, vemos que tiene sentido los bytes que
+vemos.
+
+Veamos que pasa con los siguientes 40 ``rol``:
+
+.. code:: asm
+
+        ; scrolling bit 1
+        rol $7039       ; cell x=39  y=0
+        rol $7032       ; cell x=38  y=0
+        rol $702b       ; cell x=37  y=0
+        rol $7024       ; cell x=36  y=0
+        rol $701d       ; cell x=35  y=0
+        rol $7016       ; cell x=34  y=0
+        rol $700f       ; cell x=33  y=0
+        rol $7140       ; cell x=32  y=1
+
+
+        rol $7139       ; cell x=39  y=1
+        rol $7132       ; cell x=38  y=1
+        ...
+        rol $710f       ; cell x=33  y=1
+        rol $7240       ; cell x=32  y=2
+
+
+        rol $7239       ; cell x=39  y=2
+        rol $7232       ; cell x=38  y=2
+        ...
+        rol $720f       ; cell x=33  y=2
+        rol $7340       ; cell x=32  y=3
+
+        ...
+
+Mmm... parecido al caso anterior, pero con una importante diferencia:
+
+- Los valores de los 7 primeros ``rol`` estan separadas por ``-7``: ``$7039``,
+  ``$7032``, ...
+- El valor del siguiente ``rol`` esta separado por ``305`` (305 = 320 - 7 - 8)
+  del anterior
+- Los siguientes 8 ``rol`` so iguales a los 8 anteriores, pero sus valores son
+  ``$100`` mayores (igual que con los primeros 40 ``rol``)
+
+Y si vemos rápidamente los siguiente 40 ``rol`` vemos:
+
+.. code:: asm
+
+        ; scrolling bit 2
+        rol $703a       ; cell x=39  y=0
+        rol $7033       ; cell x=38  y=0
+        rol $702c       ; cell x=37  y=0
+        rol $7025       ; cell x=36  y=0
+        rol $701e       ; cell x=35  y=0
+        rol $7017       ; cell x=34  y=0
+        rol $7148       ; cell x=33  y=1
+        rol $7141       ; cell x=32  y=1
+
+
+        rol $7139       ; cell x=39  y=1
+        rol $7132       ; cell x=38  y=1
+        ...
+        rol $7248       ; cell x=33  y=2
+        rol $7241       ; cell x=32  y=2
+
+
+        rol $723a       ; cell x=39  y=2
+        rol $7233       ; cell x=38  y=2
+        ...
+        rol $7348       ; cell x=33  y=3
+        rol $7341       ; cell x=32  y=3
+
+        ...
+
+Similar a los 40 ``rol`` anteriores.
+
+- Los valores de los 6 primeros ``rol`` estan separados por ``-7``: ``$703a``,
+  ``$7033``, ...
+- El valor del siguiente ``rol`` esta separado por ``305`` (305 = 320 - 7 - 8)
+  del anterior
+- El valor del siguiente ``rol`` esta separado por ``-7`` del anterior
+- Los siguiente 8 ``rol`` so iguales a los 8 anteriores, pero sus valores son
+  ``$100`` mayores (igual que con los primeros 40 ``rol``)
+
+Y así...
+
+¿Se ve el patrón? Probablemente haya varias maneras de generar el código que
+queremos. Nosotros terminamos usando unas tablas de *base* + *offset*. Funciona
+así:
+
+.. code:: c
+
+        // pseudo código
+
+        // all values are in hexadecimal
+        int base_gfx = $6f00;        // top-left = $6f00. top-right=$7138
+        // 40 values for the 40 cells: from $138 to 0 (312 to 0)
+        int base[] = {$138,$130,$128,$120,$118,$110,$108,$100,$f8,$f0,...,$10,$8,$0};
+        // 48 values max
+        int offset[] = {0,1,2,3,4,5,6,7,                           // 0-7
+                        $140,$141,$142,$143,$144,$145,$146,$147,   // 320-327
+                        $280,$281,$282,$283,$284,$285,$286,$287,   // 640-647
+                        ...
+                       };
+
+        int y = 0;
+        int x = 0;
+
+        for (int i=0; i<8; i++) {
+            for (x=0; x<40; x++) {
+                int rol_value = base_gfx;
+                rol_value += base[x];
+                rol_value += rel[y];
+                y++;
+                generate_addr(rol_value);
+            }
+            y++;
+        }
+
+Veamos si funciona para los valores del primer bit:
+
+.. code::
+                  gfx   + base + rel  =
+        valor 0 = $6f00 + $138 +    0 = $7038 ✔
+        valor 1 = $6f00 + $130 +    1 = $7031 ✔
+        ...
+        valor 6 = $6f00 + $108 +    6 = $700e ✔
+        valor 7 = $6f00 + $100 +    7 = $7007 ✔
+
+        valor 8 = $6f00 +  $f8 + $140 = $7138 ✔
+
+Parece funcionar... veamos para los del segundo bit:
+
+.. code::
+                   gfx   + base + rel  =
+        valor 40 = $6f00 + $138 +    1 = $7039 ✔
+        valor 41 = $6f00 + $130 +    2 = $7032 ✔
+        ...
+        valor 46 = $6f00 + $108 +    7 = $700f ✔
+        valor 47 = $6f00 + $100 + $140 = $7140 ✔
+
+        valor 48 = $6f00 +  $f8 + $141 = $7139 ✔
+
+Sí, funciona. Y también funciona para el 2do bit, 3er bit, etc. Y de esta
+manera, tenemos un generador de valores para el ``rol`` que funciona como
+queremos.
+
+El código completo esta en `github <https://github.com/c64scene-ar/4kindness/blob/master/intro.s#L233>`__.
+No tiene nada de raro salvo esto de calcular los valores para los ``rol`` usando
+esta tablas.
+
+Pero, ¿y cuanto ocupa el código nuevo?
+
+Sin comprimir:
+
+- *unrolled loop*:
+- generador de código:
+
+Ambos comprimidos usando alz64_:
+
+- *unrolled loop*:
+- generador de código:
 
 
 Preguntas y demás
@@ -370,7 +528,8 @@ Referencias
 .. _Exomizer: https://bitbucket.org/magli143/exomizer/wiki/Home
 .. _Parte_I: https://github.com/c64scene-ar/chipdisk-nac-vol.1/blob/master/chipdisk_internals.es.rst
 .. _alz64: http://csdb.dk/release/?id=77754
+.. _bounding-box: https://en.wikipedia.org/wiki/Minimum_bounding_box
 .. _bzip2: http://www.bzip.org/
 .. _cc65: https://github.com/cc65/cc65
-.. _xz: https://en.wikipedia.org/wiki/Xz
 .. _crunchers: http://iancoog.altervista.org/PACKERS.TXT
+.. _xz: https://en.wikipedia.org/wiki/Xz
