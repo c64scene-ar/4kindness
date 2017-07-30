@@ -16,6 +16,7 @@ Hola. Esto es lo que hace la intro 4Kindness:
    :alt: Intro 4Kindness
 
 Y el binario lo pueden bajar de acá: `4kindness.d64 <https://github.com/c64scene-ar/4kindness/raw/master/bin/4kindness.d64>`__
+Y el código fuente esta aca: `4Kindness en github <https://github.com/c64scene-ar/4kindness>`__
 
 Listo, empecemos. Solo dos cosas que vamos a estudiar:
 
@@ -95,7 +96,7 @@ de bits de arriba), entonces un posible código sería:
 
 El código se puede reducir mucho usando haciendo un *unrolled loop* [#]_ con las
 poderosas macros del ensamblador. (Ver
-`unrolled loops <https://github.com/c64scene-ar/chipdisk-nac-vol.1/blob/master/chipdisk_internals.es.rst#truquito-unrolled-loops>`__ 
+`unrolled loops <https://github.com/c64scene-ar/chipdisk-nac-vol.1/blob/master/chipdisk_internals.es.rst#truquito-unrolled-loops>`__
 de la Parte I)
 Algo así:
 
@@ -232,16 +233,14 @@ Pero se paga un precio alto en usar *unrolled loops*: memoria RAM. Un simple
 loop que quizás ocupa unas decenas de bytes, cuando se convierte a *unrolled
 loop* puede ocupar unos miles de bytes.
 
-En la Parte_I_ usamos *unrolled loops* para ganar performance. En este caso
-usamos 8unrolled loops* para simplificar el algoritmo (y de paso mejorar la
-performance).
+En la Parte_I_ usamos *unrolled loops* para ganar velocidad de ejecución. En
+este caso usamos *unrolled loops* para simplificar el código (y de paso
+mejorar la velocidad de ejecución).
 
-Es un trade off:
-
-- memoria RAM vs. performance + sencillez del algoritmo
+Es un compromiso: memoria RAM ó velocidad de ejecución & código más prolijo
 
     .. note:: El algoritmo se puede escribir tranquilimante en C. De hecho
-      nosotros usamos cc65_ como ensamblador. Y mezclar C con ensamblador puede 
+      nosotros usamos cc65_ como ensamblador. Y mezclar C con ensamblador puede
       resultar muy útil. Pero esta fuera del alcance del "cursito de asm"
       el como y como usar C.
 
@@ -272,10 +271,8 @@ Había 4 posibles alternativas:
 - Hacer un generador de código en ensamblador
 
 Terminamos usando el generador de código en ensamblador. Pero las otras 3
-alternativas eran válidas.
-
-Y cuento esto, porque casi siempre hay más de una posible solución. Es cuestión
-de analizar los pros y las contras.
+alternativas eran válidas. Cuento esto, porque casi siempre hay más de una
+posible solución. Es cuestión de analizar los pros y las contras.
 
 Por qué un generador de código
 ------------------------------
@@ -290,22 +287,70 @@ motivos:
 algunos bytes cambiados.
 - Si bien los *crunchers* de la c64 funcionan bien recordemos que el código del
   *de-cruncher* tiene que correr en la c64, ocupar muy poco y ser rápido. Y es
-  por eso que no comprimem tan bien como compresor modernos como el bzip2 o xz.
+  por eso que no comprimem tan bien como compresor modernos como el bzip2_ ó
+  el xz_.
 
 
 Cómo se hace un generador de código
 -----------------------------------
 
-No hay mágia ni nada raro. Lo que hay que hacer es analizar los bytes que uno
-quiere generar y buscar patrones y hacer un código que genere esos patrones.
+No hay mágia negra ni nada raro. Lo que hay que hacer es analizar los bytes que
+uno quiere generar y buscar patrones y hacer un código que genere esos patrones.
 Siempre que querramos generar código de un *unrolled loop*, entonces vamos a
 poder encontrar un patrón.
 
-Agarramos un editor hexadecimal, y veíamos esos bytes hasta encontrar un patrón.
+Por ejemplo, esto es un dump de memoria de lo que queremos generar:
 
-TODO: gráfico.
+.. Figure:: https://lh3.googleusercontent.com/_GlEZ1fNCw0On_PjZ2WXPJ6-Ju8bQIx_-ApR-s4W-pC-OgDL1Y2dW_zFtuKVFd23bzvUzJ1jO8HCGriIzWZaorzpAlVgiTXWBJ6Gely29o80qg5bQs3rNUINM7KSpd-6zCFByQzjEAo
+
+Analicemos los 3 primeros bytes: ``2E 38 70``
+
+- ``2E`` es el opcode de ``rol``
+- ``38 70`` es la dirección de memoria en *little endian*: ``$7038``
+
+Y si seguimos analizando tenemos:
+
+.. code:: asm
+
+        rol $7038
+        rol $7031
+        rol $702a
+        rol $7023
+        rol $701c
+        rol $7015
+        rol $700e
+        rol $7007
+
+        rol $7138
+        rol $7131
+        rol $712a
+        rol $7123
+        rol $711c
+        rol $7115
+        rol $710e
+        rol $7107
 
 
+¿Se ve el patrón? ¡Claro que sí! Pero si nosotros diseñamos el algoritmo, ¡cómo
+no lo ibamos a saber que ese era el patrón!. Lo cierto es que ver los bytes
+ayuda. No hay que subestimar esta método. Sirve para:
+
+- Para saber los op-codes que hay que generar
+- Para encontrar algún patrón que no hayamos visto
+- Y luego para comparar que el código que estemos generando sea igual al
+  original (también se puede usar un *binary compary*).
+
+Y eso es todo.
+
+Preguntas y demás
+=================
+
+¿Tenés preguntas? ¿Querés colaborar con PVM? Estamos acá:
+
+-  http://pungas.space
+-  `Twitter <https://twitter.com/pungas64>`__
+-  `Facebook <https://www.facebook.com/PVM1996/>`__
+-  En IRC. `EFnet <http://www.efnet.org/>`__ . Canal #pvm
 
 Referencias
 ===========
@@ -318,3 +363,5 @@ Referencias
 .. _Parte_I: https://bitbucket.org/magli143/exomizer/wiki/Home
 .. _alz64: http://csdb.dk/release/?id=77754
 .. _cc65: https://github.com/cc65/cc65
+.. _bzip2: http://www.bzip.org/
+.. _xz: https://en.wikipedia.org/wiki/Xz
