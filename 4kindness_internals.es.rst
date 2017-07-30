@@ -300,7 +300,7 @@ poder encontrar un patrón.
 
 Por ejemplo, esto es un dump de memoria de lo que queremos generar:
 
-.. Figure:: https://lh3.googleusercontent.com/9B6Mfoh8FNYqweTweN_ZFfC630PBearjdpLjbwk6p7BXyyRWK4UuqGn_WPvXrx3E0c7poFSO5T1nzbtPyd6bFgefKeOUJroa0wXjvJg61P-nWKzAtLaIpVAy_Ya8LWcZlqiCb0mUQBQ
+.. Figure:: https://lh3.googleusercontent.com/eGInnhLFkmqw4SbOp54_kXuN-JVQetVtZ-kwSPEg2rHH7xZvyeYq1_Mm6AINS3xUiHLBkh1_SBo4B3BklbtP_zsfoNmLkFMZWYGy0G2Wez7uBGJzuHQXoUS6pcSwgWASrh-ENn3CzA8
    :alt: memory dump
 
 
@@ -454,6 +454,7 @@ así:
         int x = 0;
 
         for (int i=0; i<8; i++) {
+            y=i;
             for (x=0; x<40; x++) {
                 int rol_value = base_gfx;
                 rol_value += base[x];
@@ -461,7 +462,6 @@ así:
                 y++;
                 generate_addr(rol_value);
             }
-            y++;
         }
 
 Veamos si funciona para los valores de la primer fila (*row 0*):
