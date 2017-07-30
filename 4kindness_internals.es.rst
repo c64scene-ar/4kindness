@@ -15,7 +15,7 @@ Hola. Esto es lo que hace la intro 4Kindness:
 .. Figure:: https://lh3.googleusercontent.com/y3C0o2PzEErAfDILRZSLyG9wV9HNSk58Udk-k--r6T80yqFkpny995jARy_4mFHKoiXjs8I2nfJhXbv3XNvRxjzWt-IYfZjQBVIn_t8KCNuHT4oVMQLnn-OJtLQSDiDk-jrs2OADaMs
    :alt: Intro 4Kindness
 
-Pueden bajar el binario de acá (donde se puede escuchar la música): `4kindness.d64 <https://github.com/c64scene-ar/4kindness/raw/master/bin/4kindness.d64>`__
+Y el binario lo pueden bajar de acá: `4kindness.d64 <https://github.com/c64scene-ar/4kindness/raw/master/bin/4kindness.d64>`__
 
 Listo, empecemos. Solo dos cosas que vamos a estudiar:
 
@@ -219,63 +219,79 @@ Y ahora hay que pasarlo a ensamblador:
 
 ¡Listo! Y quiero resaltar lo fácil que es escribir algoritmos usando **unrolled
 loops + macros**. Ejercicio para el lector: convertir ese algoritmo a
-ensamblador sin macros ni unrolled loops. Van a ver que rápido que se complica.
+ensamblador sin macros ni *unrolled loops*. Van a ver que rápido que se
+complica.
 
 **Repito**: Algoritmos que son fáciles de escribir en C, pero difíciles de
-escribir en ensamblador __puro__, se pueden convertir de manera relativamente
-sencilla a ensamblador con unrolled loops + macros.
+escribir en ensamblador *puro*, se pueden convertir de manera relativamente
+sencilla a ensamblador con *unrolled loops* + macros.
 
 No solamente es más fácil de hacer, sino que la velocidad de ejecución
 ¡va a ser mucho mayor! (y además el código es más mantenible).
 
+Pero se paga un precio alto en usar *unrolled loops*: memoria RAM. Un simple
+loop que quizás ocupa unas decenas de bytes, cuando se convierte a *unrolled
+loop* puede ocupar unos miles de bytes.
 
-Pero se paga un precio alto en usar unrolled loops: memoria RAM. Un simple
-loop que quizas ocupa unas decenas de bytes, cuando se convierte a unrolled loop
-puede ocupar unos miles de bytes.
-
-En la Parte_I_ usamos unrolled loops para ganar performance. En este caso usamos
-unrolled loops para simplificar el algoritmo (y de paso mejorar la performance).
+En la Parte_I_ usamos *unrolled loops* para ganar performance. En este caso
+usamos 8unrolled loops* para simplificar el algoritmo (y de paso mejorar la
+performance).
 
 Es un trade off:
 
 - memoria RAM vs. performance + sencillez del algoritmo
 
-    .. note:: El algoritmo se puede escribir en C tranquilimante. De hecho
+    .. note:: El algoritmo se puede escribir tranquilimante en C. De hecho
       nosotros usamos cc65_ como ensamblador. Y mezclar C con ensamblador puede 
       resultar muy útil. Pero esta fuera del alcance del "cursito de asm"
-      cuando y como usar C.
+      el como y como usar C.
 
 Generar código
 ==============
 
 4Kindness, este scroller que hicimos, fue para presentarlo en un concurso de
 intros de 4k. Esto significa que el binario no puede ocupar más de 4096 bytes.
-Pero en memoria puede ocupar todo lo que quiera. De hecho en memoria la intro
+Pero en memoria puede ocupar todo lo que quiera. De hecho 4Kindness, en memoria,
 ocupa ~16K RAM:
 
 - gráfico bitmap: 9k
 - música SID: 2.5k
 - fonts: 1k
-- código: 2.5k (de los cuales 2k eran del unrolled loop)
+- código: 2.5k (de los cuales 2k eran del *unrolled loop*)
 
-Cuando comprimimos todo [#]_, nos quedó un binario de 5k.
+Cuando comprimimos todo [#]_, nos quedó un binario de ~5k.
 
 Pudimos reducir un poco la música, los fonts y usando la Zero Page estabamos en
 los ~4.5k. Mucho más no podíamos reducir el binario sin reducir esos 2k de
-código generados por el unrolled loop.
+código generados por el *unrolled loop*.
 
-Tomamos 3 estrategias diferentes:
+Había 4 posibles alternativas:
 
 - Hacer el loop en C
+- Hacer el loop en ensamblador
 - Hacer un generador de código en C
 - Hacer un generador de código en ensamblador
 
-No recuerdo que sucedió con el loop en C (no se si era lento ó que no tuvimos
-tiempo ó que), pero la cosa es que nos dividimos el trabajo y uno hizo un
-generador en C y otro en asm.
+Terminamos usando el generador de código en ensamblador. Pero las otras 3
+alternativas eran válidas.
 
-Las dos generadores funcionarion bien, pero el que estaba hecho en asm era un
-poco más chico que el hecho en C, y por eso usamos el de asm.
+Y cuento esto, porque casi siempre hay más de una posible solución. Es cuestión
+de analizar los pros y las contras.
+
+Por qué un generador de código
+------------------------------
+
+La pregunta es: ¿se puede hacer un generador de código que ocupe menos que el
+código comprimido generado por *crunchers* como el alz64_ o el Exomizer_?
+
+Si se trata de *unrolled loops*, la respuesta es casi siempre sí. Por dos
+motivos:
+
+- Un *unrolled loop* no es más que un patrón que se repite y repite con algunos
+  bytes cambiados.
+- Si bien los *crunchers* de la c64 funcionan bien recordemos que el código del
+  *de-cruncher* tiene que correr en la c64, ocupar muy poco y ser rápido. Y es
+  por eso que no comprimem tan bien como compresor modernos como el bzip2 o xz.
 
 
 Cómo se hace un generador de código
@@ -283,6 +299,8 @@ Cómo se hace un generador de código
 
 No hay mágia ni nada raro. Lo que hay que hacer es analizar los bytes que uno
 quiere generar y buscar patrones y hacer un código que genere esos patrones.
+Siempre que querramos generar código de un *unrolled loop*, entonces vamos a
+poder encontrar un patrón.
 
 Agarramos un editor hexadecimal, y veíamos esos bytes hasta encontrar un patrón.
 
@@ -295,5 +313,7 @@ Referencias
 
 .. [#] Usamos `alz64 <http://csdb.dk/release/?id=77754>`__ para comprimir, ya que comprime mejor que Exomizer, pero es mucho más lento
 
+.. _Exomizer: https://bitbucket.org/magli143/exomizer/wiki/Home
 .. _Parte_I: https://bitbucket.org/magli143/exomizer/wiki/Home
+.. _alz64: http://csdb.dk/release/?id=77754
 .. _cc65: https://github.com/cc65/cc65
