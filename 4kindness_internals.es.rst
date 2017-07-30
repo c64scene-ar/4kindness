@@ -15,7 +15,7 @@ Hola. Esto es lo que hace la intro 4Kindness:
 .. Figure:: https://lh3.googleusercontent.com/y3C0o2PzEErAfDILRZSLyG9wV9HNSk58Udk-k--r6T80yqFkpny995jARy_4mFHKoiXjs8I2nfJhXbv3XNvRxjzWt-IYfZjQBVIn_t8KCNuHT4oVMQLnn-OJtLQSDiDk-jrs2OADaMs
    :alt: Intro 4Kindness
 
-O pueden bajar el binario de aca: `4kindness.d64 <https://github.com/c64scene-ar/4kindness/raw/master/bin/4kindness.d64>`__
+Pueden bajar el binario de acá (donde se puede escuchar la música): `4kindness.d64 <https://github.com/c64scene-ar/4kindness/raw/master/bin/4kindness.d64>`__
 
 Listo, empecemos. Solo dos cosas que vamos a estudiar:
 
@@ -27,9 +27,7 @@ Scroll en diagonal
 ==================
 
 En la Parte_I_ vimos como hacer un scroll con sprites. Es un buen momento para
-releerlo en caso que no lo tengan fresco:
-
-- `Como hacer un scroll con sprites <https://github.com/c64scene-ar/chipdisk-nac-vol.1/blob/master/chipdisk_internals.es.rst#scroll-con-sprites>`__
+releerlo en caso que no lo tengan fresco: `Como hacer un scroll con sprites <https://github.com/c64scene-ar/chipdisk-nac-vol.1/blob/master/chipdisk_internals.es.rst#scroll-con-sprites>`__
 
 Hacer un scroll con sprites hi-res, ó en modo gráfico hi-res es básimante
 similar. Repasemos el modo gráfico hi-res.
@@ -52,6 +50,9 @@ scroll).
 Si queremos hacer un scroll horizontal en modo gráfico hi-res, solo tenemos que
 hacer ``rol`` (rotate left) de los bytes en un orden determinado, ya que el
 ``carry flag`` se tiene que propagar de un byte a otro.
+
+.. Figure:: https://lh3.googleusercontent.com/oEBuQcNd5kJmrhFS9MVPtRaaRMS6Mbe_TqzaAmzlz8q7fPY-_GsicScFhf5gtop6_3ifH0kG-4EIpJtUmvdIJnK0wlURmVk1wMCqhR_FPzY47z2BlOZZsBzPBK41c_CKzXPtRZywA9c
+   :alt: horizontal scroll
 
 Supongamos que el bitmap esta la posición ``$6000`` y queremos scrollear la
 primer fila de celdas (las 8 primeras filas de bits de arriba), entonces un
@@ -113,14 +114,14 @@ Algo así:
                 .endrepeat
         .endrepeat
 
-Y listo! Sencillo, ¿no?
+¡Y listo! Sencillo, ¿no?
 Ahora que sabemos hacer un scroll horizontal usando bitmap, ¿cómo hacemos para
 que el scroll sea en diagonal?
 
 La idea es similar. El scroll que queremos hacer tiene que tener la siguiente
 pendiente:
 
-TODO: gráfico
+.. Figure:: https://lh3.googleusercontent.com/EBZt0OIIXfiSuHnllmPaAYNJeGQ0tm7U7b-lT1MX_JOgGzrpDODhGHHeHa4MS5ErBbeyQ8XFK9MxTRCR9kPNB7D8b-XuJJo4P_HMz3cdpX3uiVTykr2XNZ0spJhvZBqyVoRAmvWa7EE
 
 En estos casos ayuda escribir "a mano" como se tiene que comportar el scroll.
 Para scrollear solo la primer fila de bits, hay que hacer:
@@ -167,9 +168,9 @@ Para scrollear solo la primer fila de bits, hay que hacer:
 Y ahora tenemos que convertir eso en un algoritmo. Tenemos 3 variables.
 Analicemos los patrones:
 
-``y``: por cada 8 ``rol``s, se incrementa en 1
-``x``: por cada ``rol``, se decrementa en 1
-``offset``: por cada ``rol``, se incrementa en 1. Con valores entre 0 y 7. O sea, módulo 8.
+- ``y``: por cada 8 ``rol``s, se incrementa en 1
+- ``x``: por cada ``rol``, se decrementa en 1
+- ``offset``: por cada ``rol``, se incrementa en 1. Con valores entre 0 y 7. O sea, módulo 8.
 
 En pseudo código sería:
 
