@@ -277,7 +277,7 @@ Por qué un generador de código
 ------------------------------
 
 La pregunta es: ¿se puede hacer un generador de código que ocupe menos que el
-código comprimido generado por crunchers_ como el alz64_ o el Exomizer_?
+código comprimido generado por *crunchers_* como el alz64_ o el Exomizer_?
 
 Si se trata de *unrolled loops*, la respuesta es casi siempre sí. Por dos
 motivos:
@@ -373,4 +373,4 @@ Referencias
 .. _bzip2: http://www.bzip.org/
 .. _cc65: https://github.com/cc65/cc65
 .. _xz: https://en.wikipedia.org/wiki/Xz
-.. _cruncher: http://iancoog.altervista.org/PACKERS.TXT
+.. _crunchers: http://iancoog.altervista.org/PACKERS.TXT
