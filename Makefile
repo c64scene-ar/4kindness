@@ -10,10 +10,13 @@ all: $(NAME).prg
 run: $(NAME).prg
 	x64sc -verbose -moncommands intro.sym $(NAME).prg
 
-d64:
+rund64: d64
+	x64sc -verbose -moncommands intro.sym $(D64_IMAGE)
+
+d64: $(NAME)-alz.prg
 	echo "Generating d64 file..."
 	$(C1541) -format "pvm 4kindness,96" d64 $(D64_IMAGE)
-	$(C1541) $(D64_IMAGE) -write intro.prg 4kindness
+	$(C1541) $(D64_IMAGE) -write intro-alz.prg 4kindness
 	$(C1541) $(D64_IMAGE) -list
 
 $(NAME).prg: $(NAME).s $(RES)

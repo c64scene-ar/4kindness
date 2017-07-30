@@ -499,13 +499,16 @@ Pero, ¿y cuanto ocupa el código nuevo?
 
 Sin comprimir:
 
-- *unrolled loop*:
-- generador de código:
+- Usando *unrolled loop*: 2078 bytes
+- Usando generador de código: 423 bytes
 
 Ambos comprimidos usando alz64_:
 
-- *unrolled loop*:
-- generador de código:
+- Usando *unrolled loop*: 730 bytes
+- Usando generador de código: 260 bytes
+
+Y esos 470 bytes de diferencia (730-260) fueron los que nos permitieron hacer
+que la intro ocupe menos de 4k! :-)
 
 
 Preguntas y demás
