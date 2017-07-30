@@ -496,9 +496,9 @@ Sí, funciona. Y también funciona para el 2do bit, 3er bit, etc. Y de esta
 manera, tenemos un generador de valores para el ``rol`` que funciona como
 queremos.
 
-El código completo esta en `github <https://github.com/c64scene-ar/4kindness/blob/master/intro.s#L233>`__.
+El código en ensamblador completo esta en `github <https://github.com/c64scene-ar/4kindness/blob/master/intro.s#L233>`__.
 No tiene nada de raro salvo esto de calcular los valores para los ``rol`` usando
-esta tablas. Algo así es:
+las tablas que vimos. Algo así es:
 
 .. code:: asm
 
@@ -542,17 +542,18 @@ esta tablas. Algo así es:
 
 Sin comprimir:
 
-- Usando *unrolled loop*: 2078 bytes
-- Usando generador de código: 423 bytes
+- Usando *unrolled loop*: ``2078 bytes``
+- Usando generador de código: ``423 bytes``
 
 Ambos comprimidos usando alz64_:
 
-- Usando *unrolled loop*: 730 bytes
-- Usando generador de código: 260 bytes
+- Usando *unrolled loop*: ``730 bytes``
+- Usando generador de código: ``260 bytes``
 
-Y esos 470 bytes de diferencia (730-260) fueron los que nos permitieron hacer
+Y esos ``470 bytes`` de diferencia (730-260) fueron los que nos permitieron hacer
 que la intro ocupe menos de 4k! :-)
 
+Fin.
 
 Preguntas y demás
 =================
