@@ -300,7 +300,8 @@ poder encontrar un patrón.
 
 Por ejemplo, esto es un dump de memoria de lo que queremos generar:
 
-.. Figure:: https://lh3.googleusercontent.com/nN58vzOSFLYm2fYr24Ys_89mX2NUjHTeRrFQvlU3_wJmXnoaDgGfRgq5yc11UFuA30b0_eAli5yMRK83CZTY0D9fz0tINAImgZ_4y66-qFanIJzrNvxlzGmIyNMG_joXqSOTgOlolTw
+.. Figure:: https://lh3.googleusercontent.com/9B6Mfoh8FNYqweTweN_ZFfC630PBearjdpLjbwk6p7BXyyRWK4UuqGn_WPvXrx3E0c7poFSO5T1nzbtPyd6bFgefKeOUJroa0wXjvJg61P-nWKzAtLaIpVAy_Ya8LWcZlqiCb0mUQBQ
+   :alt: memory dump
 
 
 Analicemos los 3 primeros bytes: ``2E 38 70``
