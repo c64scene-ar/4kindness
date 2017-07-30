@@ -441,12 +441,18 @@ así:
 
         // all values are in hexadecimal
         int base_gfx = $6f00;        // top-left = $6f00. top-right=$7138
-        // 40 values for the 40 cells: from $138 to 0 (312 to 0)
-        int base[] = {$138,$130,$128,$120,$118,$110,$108,$100,$f8,$f0,...,$10,$8,$0};
-        // 48 values max
+
+        // 40 values
+        int base[] = {$138,$130,$128,$120,$118,$110,$108,$100,     // 40 values from:
+                     $f8,$f0,$e8,$e0,$d8,$d0,$c8,$c0,              // 312 to 0
+                     ...,                                          // with a step of 8
+                     $38,$30,$28,$20,$18,$10,$8,$0};
+
+        // 56 values
         int offset[] = {0,1,2,3,4,5,6,7,                           // 0-7
                         $140,$141,$142,$143,$144,$145,$146,$147,   // 320-327
                         $280,$281,$282,$283,$284,$285,$286,$287,   // 640-647
+                        $3c0,$3c1,$3c2,$3c3,$3c4,$3c5,$3c6,$3c7,   // 960-967
                         ...
                        };
 
@@ -454,13 +460,14 @@ así:
         int x = 0;
 
         for (int i=0; i<8; i++) {
-            y=i;
+            y=i;                                // y increments by 1 each iteration
             for (x=0; x<40; x++) {
                 int rol_value = base_gfx;
                 rol_value += base[x];
                 rol_value += offset[y];
-                y++;
                 generate_addr(rol_value);
+
+                y++;
             }
         }
 
