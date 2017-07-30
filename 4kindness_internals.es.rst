@@ -241,7 +241,7 @@ Es un compromiso: memoria RAM ó velocidad de ejecución & código más prolijo
     .. note:: El algoritmo se puede escribir tranquilimante en C. De hecho
       nosotros usamos cc65_ como ensamblador. Y mezclar C con ensamblador puede
       resultar muy útil. Pero esta fuera del alcance del "cursito de asm"
-      el como y como usar C.
+      el como usar C.
 
 Generar código
 ==============
@@ -271,7 +271,7 @@ Había 4 posibles alternativas:
 
 Terminamos usando el generador de código en ensamblador. Pero las otras 3
 alternativas eran válidas. Cuento esto, porque casi siempre hay más de una
-posible solución. Es cuestión de analizar los pros y las contras.
+posible solución. Es cuestión de analizar los pros y las contras de cada una.
 
 Por qué un generador de código
 ------------------------------
@@ -283,7 +283,7 @@ Si se trata de *unrolled loops*, la respuesta es casi siempre sí. Por dos
 motivos:
 
 - Un *unrolled loop* no es más que un patrón que se repite y se repite [#]_ con
-algunos bytes cambiados.
+  algunos bytes cambiados.
 - Si bien los *crunchers* de la c64 funcionan bien recordemos que el código del
   *de-cruncher* tiene que correr en la c64, ocupar muy poco y ser rápido. Y es
   por eso que no comprimem tan bien como compresor modernos como el bzip2_ ó
