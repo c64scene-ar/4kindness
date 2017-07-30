@@ -313,7 +313,7 @@ Y si analizamos los primeros 40 ``rols``:
 
 .. code:: asm
 
-        ; scrolling bit 0
+        ; scrolling row 0
         rol $7038       ; cell x=39  y=0
         rol $7031       ; cell x=38  y=0
         rol $702a       ; cell x=37  y=0
@@ -354,7 +354,7 @@ Veamos que pasa con los siguientes 40 ``rol``:
 
 .. code:: asm
 
-        ; scrolling bit 1
+        ; scrolling row 1
         rol $7039       ; cell x=39  y=0
         rol $7032       ; cell x=38  y=0
         rol $702b       ; cell x=37  y=0
@@ -393,7 +393,7 @@ Y si vemos rápidamente los siguiente 40 ``rol`` vemos:
 
 .. code:: asm
 
-        ; scrolling bit 2
+        ; scrolling row 2
         rol $703a       ; cell x=39  y=0
         rol $7033       ; cell x=38  y=0
         rol $702c       ; cell x=37  y=0
@@ -464,7 +464,7 @@ así:
             y++;
         }
 
-Veamos si funciona para los valores del primer bit:
+Veamos si funciona para los valores de la primer fila (*row 0*):
 
 .. code::
 
@@ -478,7 +478,7 @@ Veamos si funciona para los valores del primer bit:
         valor 8 = $6f00 +  $f8 + $140 = $7138 ✔
 
 
-Parece funcionar... veamos para los del segundo bit:
+Parece funcionar... veamos para los de la segunda fila (*row 1*:
 
 .. code::
 
@@ -492,9 +492,8 @@ Parece funcionar... veamos para los del segundo bit:
         valor 48 = $6f00 +  $f8 + $141 = $7139 ✔
 
 
-Sí, funciona. Y también funciona para el 2do bit, 3er bit, etc. Y de esta
-manera, tenemos un generador de valores para el ``rol`` que funciona como
-queremos.
+Sí, funciona. Y también funciona para la 3ra fila, 4ta, etc. Y de esta manera,
+tenemos un generador de valores para el ``rol`` que funciona como queremos.
 
 El código en ensamblador completo esta en `github <https://github.com/c64scene-ar/4kindness/blob/master/intro.s#L233>`__.
 No tiene nada de raro salvo esto de calcular los valores para los ``rol`` usando
