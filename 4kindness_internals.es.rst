@@ -559,7 +559,14 @@ Ambos comprimidos usando alz64_:
 Y esos ``470 bytes`` de diferencia (730-260) fueron los que nos permitieron hacer
 que la intro ocupe menos de 4k! :-)
 
-Fin.
+
+Conclusiones
+------------
+
+- No es común tener que generar código
+- En caso de necesitarlo, tratar de generar el código de los *unrolled loops* ya que suelen ocupar mucho y tienen un patrón
+- Si se complican las operaciones matemáticas para generar el patrón, usar tablas de cálculo.
+
 
 Preguntas y demás
 =================
