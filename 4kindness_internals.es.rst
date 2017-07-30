@@ -478,7 +478,7 @@ Veamos si funciona para los valores de la primer fila (*row 0*):
         valor 8 = $6f00 +  $f8 + $140 = $7138 ✔
 
 
-Parece funcionar... veamos para los de la segunda fila (*row 1*:
+Parece funcionar... veamos para los de la segunda fila (*row 1*):
 
 .. code::
 
