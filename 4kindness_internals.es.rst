@@ -332,23 +332,22 @@ Y si seguimos analizando tenemos:
 
 
 ¿Se ve el patrón? ¡Claro que sí! Pero si nosotros diseñamos el algoritmo, ¡cómo
-no lo ibamos a saber que ese era el patrón!. Lo cierto es que ver los bytes
-ayuda. No hay que subestimar este método. Sirve para:
+no ibamos a saber que ese era el patrón! Lo cierto es que ver los bytes ayuda.
+No hay que subestimar este método. Sirve para:
 
 - Para saber los op-codes que hay que generar
 - Para encontrar algún patrón que no hayamos visto
 - Y luego para comparar que el código que estemos generando sea igual al
-  original (también se puede usar un *binary compary*).
+  original (también se puede usar un *binary compare*).
 
 
 Nosotros usamos tablas para sumar y calcular offsets, pero más allá de eso,
 el código que genera código es sencillo.
 
-Y eso es todo. No vale la pena poner el código que genera código aca. Lo
-interesante es saber que se puede hacer, y que el truco este en ver los
-patrones. Luego debería salir más o menos fácil.
-
-Se puede ver el código completo acá: https://github.com/c64scene-ar/4kindness/blob/master/intro.s#L233
+Y eso es todo. No vale la pena poner el código que genera código acá, ya que
+esta en `github <https://github.com/c64scene-ar/4kindness/blob/master/intro.s#L233>`__.
+Lo interesante es saber que se puede hacer, y que el truco esta
+en ver los patrones. Luego debería salir más o menos fácil.
 
 
 Preguntas y demás
