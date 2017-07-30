@@ -344,7 +344,7 @@ Acá se ve un patrón claro:
 
 - Los valores de los 8 primeros ``rol`` están separados por ``-7``:
   ``$7038``, ``$7031``, ...
-- Los siguientes 8 ``rol`` so iguales a los 8 anteriores, pero sus valores son
+- Los siguientes 8 ``rol`` son iguales a los 8 anteriores, pero sus valores son
   ``$100`` mayores. ``$100`` es un número redondo ¡Nos gusta!
 
 Y si miramos nuevamente nuestro algoritmo, vemos que tiene sentido los bytes que
@@ -386,7 +386,7 @@ Mmm... parecido al caso anterior, pero con una importante diferencia:
   ``$7032``, ...
 - El valor del siguiente ``rol`` esta separado por ``305`` (305 = 320 - 7 - 8)
   del anterior
-- Los siguientes 8 ``rol`` so iguales a los 8 anteriores, pero sus valores son
+- Los siguientes 8 ``rol`` son iguales a los 8 anteriores, pero sus valores son
   ``$100`` mayores (igual que con los primeros 40 ``rol``)
 
 Y si vemos rápidamente los siguiente 40 ``rol`` vemos:
@@ -426,7 +426,7 @@ Similar a los 40 ``rol`` anteriores.
 - El valor del siguiente ``rol`` esta separado por ``305`` (305 = 320 - 7 - 8)
   del anterior
 - El valor del siguiente ``rol`` esta separado por ``-7`` del anterior
-- Los siguiente 8 ``rol`` so iguales a los 8 anteriores, pero sus valores son
+- Los siguiente 8 ``rol`` son iguales a los 8 anteriores, pero sus valores son
   ``$100`` mayores (igual que con los primeros 40 ``rol``)
 
 Y así...
