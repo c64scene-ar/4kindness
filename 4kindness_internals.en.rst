@@ -220,7 +220,7 @@ Converted to assembler, the code looks like the following:
 
 Done! I want to highlight how easy it is to write algorithms using **unrolled
 loops + macros**. Convert that algorithm to assembler without macros or
-*unrolled loops* (left as an excersice for the reader). You'll see that it can
+*unrolled loops* (left as an exersice for the reader). You'll see that it can
 get complex.
 
 **Let me say it again**: Algorithms that are easy to write in C, but difficult
@@ -236,7 +236,7 @@ can take a few thousand bytes.
 
 In Part_I_ we used *unrolled loops* to improve performance. In this case we use
 *unrolled loops* to simplify the code. Faster code is also a nice feature, but
-in this case is secongary goal.
+in this case is secondary goal.
 
 It is a compromise: memory RAM or faster code & more verbose code
 
@@ -577,7 +577,7 @@ Do you have questions? Do you want to collaborate with PVM? We're here:
 References
 ==========
 
-.. [#] We use `alz64 <http://csdb.dk/release/?id=77754>`__ as the cruncher, since it compresses better than Exomizer_, but it is slower
+.. [#] We used `alz64 <http://csdb.dk/release/?id=77754>`__ as the cruncher, since it compresses better than Exomizer_, but it is slower
 
 .. _Exomizer: https://bitbucket.org/magli143/exomizer/wiki/Home
 .. _Part_I: https://github.com/c64scene-ar/chipdisk-nac-vol.1/blob/master/chipdisk_internals.en.rst
