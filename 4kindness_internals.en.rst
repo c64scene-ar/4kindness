@@ -1,5 +1,5 @@
 Intermediate cms of asm for c64 - Part II: Making an intro 4k
-====================================================================== =====================
+=============================================================
 
 : Version: 0.1.0 (`go to the latest version <https://github.com/c64scene-ar/puas/blob/master/4kindness_internals.es.rst>` __)
 : Author: `riq <http://retro.moe>` __ / `Pungas of Villa Martelli <http://pungas.space>` __
@@ -12,8 +12,8 @@ Introduction
 
 Hi. Here's what the 4Kindness intro does:
 
-.. Figure: https://lh3.googleusercontent.com/y3C0o2PzEErAfDILRZSLyG9wV9HNSk58Udk-k--r6T80yqFkpny995jARy_4mFHKoiXjs8I2nfJhXbv3XNvRxjzWt-IYfZjQBVIn_t8KCNuHT4oVMQLnn-OJtLQSDiDk-jrs2OADaMs
-   : Alt: Intro 4Kindness
+.. Figure:: https://lh3.googleusercontent.com/y3C0o2PzEErAfDILRZSLyG9wV9HNSk58Udk-k--r6T80yqFkpny995jARy_4mFHKoiXjs8I2nfJhXbv3XNvRxjzWt-IYfZjQBVIn_t8KCNuHT4oVMQLnn-OJtLQSDiDk-jrs2OADaMs
+   :alt: Intro 4Kindness
 
 And the binary can be downloaded from here: `4kindness.d64 <https://github.com/c64scene-ar/4kindness/raw/master/bin/4kindness.d64>` __.
 And the source code is here: `4Kindness en github <https://github.com/c64scene-ar/4kindness>` __
@@ -36,12 +36,12 @@ the same. Let's review the hi-res graphic mode.
 - It consists of 40 x 25 cells:
 
 .. Figure:: https://lh3.googleusercontent.com/K_YyuNocoS4yaVxr2uuJgraYpI5An3BwgxahScn3bDjdFBsLj4b6h-g4ngUxkbOfXqlkpSQuQIKeGGEgVgrsShnI5FnIl8GSKw8msFEYmGatIrfTKp_5RpFPTsmgZYZ1N-2fH3T1QMc
-   :alt: bitmap cells
+   :alt: bitmap cells
 
 - Each cell occupies 8 bytes:
 
 .. Figure:: https://lh3.googleusercontent.com/lqU7dLG2RpCfhoZ-pw2L3zNjkLVOgsjAdHxM5JtYnLy7gwO7K7i-lxRawKgyKhloBcvO3IzZ1vl36sthotpo7DSFIhdj7X9-qbnbh5Bp8OjjwajeKwcwOouhZgqqDKL4amN1TwRczac
-   :alt: cell detail
+   :alt: cell detail
 
 
 In total it occupies 40 cells * 8 bytes each * 25 cells = 8000 bytes. More memory
@@ -53,7 +53,7 @@ If we want to do a horizontal scroll in hi-res graphical mode, we only have to
 *carry flag* must be propagated from one byte to another.
 
 .. Figure:: https://lh3.googleusercontent.com/oEBuQcNd5kJmrhFS9MVPtRaaRMS6Mbe_TqzaAmzlz8q7fPY-_GsicScFhf5gtop6_3ifH0kG-4EIpJtUmvdIJnK0wlURmVk1wMCqhR_FPzY47z2BlOZZsBzPBK41c_CKzXPtRZywA9c
-   :alt: horizontal scroll
+   :alt: horizontal scroll
 
 Suppose we want to scroll the first row of cells (the first 8 rows
 Of bits from above), then a possible code would be:
@@ -241,10 +241,9 @@ Improve the speed of execution).
 
 It is a compromise: RAM memory or execution speed & more verbose code
 
-    .. note:: The algorithm can be written quietly in C. In fact
-      We use cc65_ as an assembler. And mixing C with assembler can
-      Be very useful. But it is outside the scope of the "asm circulation"
-      The how to use C.
+    .. note:: The algorithm can be written quietly in C. In fact we use cc65_ as
+      an assembler. And mixing C with assembler can be very useful. But it is
+      outside the scope of the "asm circulation" the how to use C.
 
 
 Code Generator
@@ -311,7 +310,7 @@ For example, this is a memory dump of what we want to generate:
 Let's analyze the first 3 bytes: ``2E 38 70``
 
 - ``2E`` is the opcode of ``rol``
-- ``38 70`` is the memory address in * little endian *: ``$7038``
+- ``38 70`` is the memory address in *little endian*: ``$7038``
 
 And if we analyze the first 40 ``rols``:
 
@@ -389,8 +388,8 @@ Mmm ... similar to the previous case, but with one important difference:
   ``$7032``, ...
 - The value of the following ``rol`` is separated by ``305`` (305 = 320 - 7 - 8)
   of the previous
-- The following 8 `` roll`` are the same as the previous 8, but their values are
-  ``$100`` higher (as with the first 40 ``roll``)
+- The following 8 ``rol`` are the same as the previous 8, but their values are
+  ``$100`` higher (as with the first 40 ``rol``)
 
 And if we quickly see the next 40 ``rol`` we see:
 
@@ -423,21 +422,20 @@ And if we quickly see the next 40 ``rol`` we see:
 
         ...
 
-Similar to the previous 40 ``roll``.
+Similar to the previous 40 ``rol``.
 
-- The values of the first 6 ``roll`` are separated by ``-7``: ``$703a``,
-  ``$7033``, ...
+- The values of the first 6 ``rol`` are separated by ``-7``: ``$703a``,
+  ``$7033``, ...
 - The value of the following ``rol`` is separated by ``305`` (305 = 320 - 7 - 8)
   of the previous
-- The value of the following `` roll`` is separated by ``-7`` from the previous one
-- The following 8 ``roll`` are the same as the previous 8, but their values are
-  ``$100`` higher (as with the first 40 `` roll``)
+- The value of the following `` rol`` is separated by ``-7`` from the previous one
+- The following 8 ``rol`` are the same as the previous 8, but their values are
+  ``$100`` higher (as with the first 40 `` rol``)
 
 And so...
 
-Do you see the pattern? There are probably several ways to generate code that
-we want. We ended up using tables of *base* + *offset*. It works
-so:
+Do you see the pattern? There are probably several ways to generate code that we
+want. We ended up using tables of *base* + *offset*. It works so:
 
 .. code:: c
 
@@ -475,7 +473,7 @@ so:
             }
         }
 
-Let's see if it works for the values of the first row (* row 0 *):
+Let's see if it works for the values of the first row (*row 0*):
 
 
 .. code::
@@ -489,7 +487,7 @@ Let's see if it works for the values of the first row (* row 0 *):
 
         valor 8 = $6f00 +  $f8 + $140 = $7138 ✔
 
-It seems to work ... let's see for the second row (* row 1 *):
+It seems to work ... let's see for the second row (*row 1*):
 
 
 .. code::
@@ -504,7 +502,7 @@ It seems to work ... let's see for the second row (* row 1 *):
         valor 48 = $6f00 +  $f8 + $141 = $7139 ✔
 
 It works. And it also works for the 3rd row, 4th, etc. And in this way,
-We have a ``roll`` value generator that works the way we want it to.
+We have a ``rol`` value generator that works the way we want it to.
 
 The complete assembler code is in `github <https://github.com/c64scene-ar/4kindness/blob/master/intro.s#L233>` __.
 There is nothing strange except for this to calculate the values for the ``rol``
@@ -553,16 +551,16 @@ And how much does code that generates code hold?
 
 Unmolded:
 
-- Using * unrolled loop *: ``2078 bytes``
+- Using *unrolled loop*: ``2078 bytes``
 - Using code generator: ``423 bytes``
 
 Both tablets using alz64_:
 
-- Using * unrolled loop *: ``730 bytes``
+- Using *unrolled loop*: ``730 bytes``
 - Using code generator: ``260 bytes``
 
-And those "470 bytes" of difference (730-260) were the ones that allowed us to do
-That the intro occupy less than 4k! (I.e.
+And those ``470 bytes`` of difference (730-260) were the ones that allowed us to
+do that the intro occupy less than 4k! :-)
 
 
 CONCLUSIONS
