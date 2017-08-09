@@ -1,7 +1,7 @@
 C64 Assembler Tutorial - Part II: Making a 4k Intro (intermediate)
 =================================================================
 
-:Version: 0.1.0 (`go to the latest version <https://github.com/c64scene-ar/puas/blob/master/4kindness_internals.es.rst>`__)
+:Version: 0.1.0 (`go to the latest version <https://github.com/c64scene-ar/4kindness/blob/master/4kindness_internals.en.rst>`__)
 :Author: `riq <http://retro.moe>`__ / `Pungas of Villa Martelli <http://pungas.space>`__
 
 .. contents:: Contents

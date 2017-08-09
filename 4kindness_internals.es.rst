@@ -1,7 +1,7 @@
 Cursito intermedio de asm para la c64 - Parte II: Haciendo una intro 4k
 =======================================================================
 
-:Versión: 0.1.0 (`ir a última versión <https://github.com/c64scene-ar/puas/blob/master/4kindness_internals.es.rst>`__)
+:Versión: 0.1.0 (`ir a última versión <https://github.com/c64scene-ar/4kindness/blob/master/4kindness_internals.es.rst>`__)
 :Autor: `riq <http://retro.moe>`__ / `Pungas de Villa Martelli <http://pungas.space>`__
 
 .. contents:: Contenidos
