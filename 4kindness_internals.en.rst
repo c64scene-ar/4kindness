@@ -495,9 +495,8 @@ It seems to work ... let's test it for second row (*row 1*):
 It works. And it also works for the 3rd row, 4th, etc. We have a working
 value-generator for ``rol``.
 
-The complete assembler code is in `github <https://github.com/c64scene-ar/4kindness/blob/master/intro.s#L233>`__.
-There is nothing strange except. But it is worth describing how we use the
-tables in assembler:
+The complete source code is in `github <https://github.com/c64scene-ar/4kindness/blob/master/intro.s#L233>`__.
+But it is worth describing how we use the tables: 
 
 .. code:: asm
 
@@ -550,15 +549,17 @@ Using the alz64_ cruncher:
 - Using code generator: ``260 bytes``
 
 And thanks to those ``470 bytes`` (730-260) we were able to reach the 4k goal.
+Yay! :)
 
 
 Conclusions
 -----------
 
-- It is not common to have to generate code
-- In case you need it, identify the *unrolled loop* that takes more space, and
-  create a code-generator for it.
-- If the identified pattern requires comples math operations, replace them with
+- Macros are your friends
+- It is not common to code code-generators.
+- But in case you need to create one: identify the *unrolled loop* that takes
+  more space, and create a code-generator for it.
+- If the identified pattern requires complex math operations, replace them with
   tables.
 
 
