@@ -1,8 +1,8 @@
 C64 Assembler Tutorial - Part II: Making a 4k Intro (intermediate)
 =================================================================
 
-: Version: 0.1.0 (`go to the latest version <https://github.com/c64scene-ar/puas/blob/master/4kindness_internals.es.rst>`__)
-: Author: `riq <http://retro.moe>`__ / `Pungas of Villa Martelli <http://pungas.space>`__
+:Version: 0.1.0 (`go to the latest version <https://github.com/c64scene-ar/puas/blob/master/4kindness_internals.es.rst>`__)
+:Author: `riq <http://retro.moe>`__ / `Pungas of Villa Martelli <http://pungas.space>`__
 
 .. contents:: Contents
    :depth: 2
@@ -10,28 +10,28 @@ C64 Assembler Tutorial - Part II: Making a 4k Intro (intermediate)
 Introduction
 ============
 
-Hi. Here's what the 4Kindness intro does:
+Hi. This is how the 4Kindness intro looks like:
 
 .. Figure:: https://lh3.googleusercontent.com/y3C0o2PzEErAfDILRZSLyG9wV9HNSk58Udk-k--r6T80yqFkpny995jARy_4mFHKoiXjs8I2nfJhXbv3XNvRxjzWt-IYfZjQBVIn_t8KCNuHT4oVMQLnn-OJtLQSDiDk-jrs2OADaMs
    :alt: Intro 4Kindness
 
-And the binary can be downloaded from here: `4kindness.d64 <https://github.com/c64scene-ar/4kindness/raw/master/bin/4kindness.d64>`__.
+The binary can be downloaded from here: `4kindness.d64 <https://github.com/c64scene-ar/4kindness/raw/master/bin/4kindness.d64>`__.
 And the source code is here: `4Kindness github <https://github.com/c64scene-ar/4kindness>`__
 
-Okay, let's start. We are going to cover only two topics:
+Let's start. We are going to cover only two topics:
 
-- How to scroll diagonally
-- How to generate code
+- How to do a diagonal scroll
+- How to generate code in runtime
 
 
-Scroll diagonally
-=================
+Diagonal scroll
+===============
 
-In Part_I_ we saw how to do a scroll with sprites. In case you  don't know how
-to do it, it's a good time to re-read it: `How to do a scroll with sprites <https://github.com/c64scene-ar/chipdisk-nac-vol.1/blob/master/chipdisk_internals.en.rst>`__
+In Part_I_ we saw how to do a scroll with sprites. In case you don't know how or
+don't remember how to do it, here is the info: `Scroll with sprites <https://github.com/c64scene-ar/chipdisk-nac-vol.1/blob/master/chipdisk_internals.en.rst#scroll-with-sprites>`__
 
-Scrolling with hi-res sprites, or hi-res graphic mode is more or less the same.
-Let's review the hi-res graphic mode.
+Scrolling with hi-res sprites, or wht hi-res graphic mode is more or less the
+same. Let's review the hi-res graphic mode.
 
 - It consists of 40 x 25 cells:
 
