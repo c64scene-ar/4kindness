@@ -219,14 +219,48 @@ l2:
 ; starts with an empty (white) palette
 
 scroll_text:
+;        scrcode "       "
+;        scrcode "hi everyone at silesia from pvm argentina. this world is held together "
+;        scrcode "by the few acts of kindness that random ppl do so this little intro is "
+;        scrcode "our way to leave something other than unpaid debts after we die. 4k is a "
+;        scrcode "bitch but our team of coders: acidbrain, munshkr, riq & woz made it work in a "
+;        scrcode "joint effort. the logo was done by sc0ring and alakran adapted it to c64. "
+;        scrcode "arlequin made the font and uctumi created this eardrum-piercing sid that "
+;        scrcode "will loop inside your brain probably forever. have a great party!"
+;        scrcode "       "
+
+        ;á = 97
+        ;é = 98
+        ;í = 99
+        ;ó = 100
+        ;ú = 101
+        ;ñ = 102
         scrcode "       "
-        scrcode "hi everyone at silesia from pvm argentina. this world is held together "
-        scrcode "by the few acts of kindness that random ppl do so this little intro is "
-        scrcode "our way to leave something other than unpaid debts after we die. 4k is a "
-        scrcode "bitch but our team of coders: acidbrain, munshkr, riq & woz made it work in a "
-        scrcode "joint effort. the logo was done by sc0ring and alakran adapted it to c64. "
-        scrcode "arlequin made the font and uctumi created this eardrum-piercing sid that "
-        scrcode "will loop inside your brain probably forever. have a great party!"
+        scrcode "Te damos la bienvenida al Museo de Inform"
+        .byte   97
+        scrcode "tica y la exhibici"
+        .byte   100
+        scrcode "n "
+        scrcode "de Pungas de Villa Martelli (PVM), que consiste en una colecci"
+        .byte   100
+        scrcode "n "
+        scrcode "de piezas de arte electr"
+        .byte   100
+        scrcode "nico para distintas plataformas (PC, "
+        scrcode "Commodore 64, Amiga) realizadas desde el inicio del colectivo "
+        scrcode "art"
+        .byte   99
+        scrcode "stico en el a"
+        .byte   102
+        scrcode "o 1996, hasta las recientemente presentadas "
+        scrcode "en festivales internacionales, haciendo foco en la apropiaci"
+        .byte   100
+        scrcode "n "
+        scrcode "tecnol"
+        .byte   100
+        scrcode "gica a trav"
+        .byte   98
+        scrcode "s del tiempo. "
         scrcode "       "
         .byte $ff
 
