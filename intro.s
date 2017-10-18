@@ -235,32 +235,40 @@ scroll_text:
         ;ó = 100
         ;ú = 101
         ;ñ = 102
+;        scrcode "       "
+;        scrcode "Te damos la bienvenida al Museo de Inform"
+;        .byte   97
+;        scrcode "tica y la exhibici"
+;        .byte   100
+;        scrcode "n "
+;        scrcode "de Pungas de Villa Martelli (PVM), que consiste en una colecci"
+;        .byte   100
+;        scrcode "n "
+;        scrcode "de piezas de arte electr"
+;        .byte   100
+;        scrcode "nico para distintas plataformas (PC, "
+;        scrcode "Commodore 64, Amiga) realizadas desde el inicio del colectivo "
+;        scrcode "art"
+;        .byte   99
+;        scrcode "stico en el a"
+;        .byte   102
+;        scrcode "o 1996, hasta las recientemente presentadas "
+;        scrcode "en festivales internacionales, haciendo foco en la apropiaci"
+;        .byte   100
+;        scrcode "n "
+;        scrcode "tecnol"
+;        .byte   100
+;        scrcode "gica a trav"
+;        .byte   98
+;        scrcode "s del tiempo. "
+;        scrcode "       "
         scrcode "       "
-        scrcode "Te damos la bienvenida al Museo de Inform"
-        .byte   97
-        scrcode "tica y la exhibici"
-        .byte   100
-        scrcode "n "
-        scrcode "de Pungas de Villa Martelli (PVM), que consiste en una colecci"
-        .byte   100
-        scrcode "n "
-        scrcode "de piezas de arte electr"
-        .byte   100
-        scrcode "nico para distintas plataformas (PC, "
-        scrcode "Commodore 64, Amiga) realizadas desde el inicio del colectivo "
-        scrcode "art"
-        .byte   99
-        scrcode "stico en el a"
-        .byte   102
-        scrcode "o 1996, hasta las recientemente presentadas "
-        scrcode "en festivales internacionales, haciendo foco en la apropiaci"
-        .byte   100
-        scrcode "n "
-        scrcode "tecnol"
-        .byte   100
-        scrcode "gica a trav"
-        .byte   98
-        scrcode "s del tiempo. "
+        scrcode "We welcome you to the Computer Museum and to the Pungas de Villa "
+        scrcode "Martelli (PVM)'s exhibit, which comprises a selection of electronic "
+        scrcode "art creations for different platforms (PC, Commodore 64, Amiga) made "
+        scrcode "from the very beginning of the collective in 1996 to those recently "
+        scrcode "released in international events, focusing on technological appropriation "
+        scrcode "across time. "
         scrcode "       "
         .byte $ff
 
